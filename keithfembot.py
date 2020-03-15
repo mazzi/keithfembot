@@ -31,27 +31,27 @@ def error(update, context):
 
 def current(update, context):
     """ Displays the show that is on air at the moment. """
-    pass
+    send("not done yet!")
 
 def now(update, context):
     """ Displays the show that is on air at the moment. """
-    pass
+    send("not done yet!")
 
 def next(update, context):
     """ Displays the upcoming show. """
-    pass
+    send("not done yet!")
 
 def today(update, context):
     """ Displays the schedule for today. """
-    pass
+    send("not done yet!")
 
 def tomorrow(update, context):
     """ Displays the schedule for tomorrow. """
-    pass
+    send("not done yet!")
 
 def week(update, context):
     """ Displays the schedule for the week. """
-    pass
+    send("not done yet!")
 
 def gibberish(update, context):
     send(random.choice(gibberish_phrase))
