@@ -19,7 +19,7 @@ def send(update, context, msg):
 def about(update, context):
     """ About """
     send(update, context, "Keith F'em, a community radio experiment, is presented by Keith in conjuction with SP2. `hello@keithfem.com`")
-    send(update, context, "Author: `lmazzitelli@pm.me` - Coded in Barcelona during the COVID-19 outbreak.")
+    send(update, context, "Bot created in Barcelona during the COVID-19 outbreak quarantine.")
 
 def echo(update, context):
     """ On noncommand i.e message - echo the message on Telegram"""
@@ -58,16 +58,16 @@ def gibberish(update, context):
 
 def help(update, context):
     """ Help usage. """
-    help_text="""
-    `/about`: the usual stuff that an about command displays.
-    `/current` or `/now`: displays the show that is on air at the moment.
-    `/next`: displays the upcoming show.
-    `/today`: displays the schedule for today.
-    `/tomorrow`: displays the schedule for tomorrow.
-    `/week`: displays the shows for the week.
-    `/gibberish`: some gibberish.
-    `/help`: this help.
-    """
+    help_text=(
+        "`/about`: the old and boring about command.\n"
+        "`/now`: show what is on the air at the moment.\n"
+        "`/next`: displays the upcoming show.\n"
+        "`/today`: displays the schedule for today.\n"
+        "`/tomorrow`: displays the schedule for tomorrow.\n"
+        "`/week`: displays the shows for the week.\n"
+        "`/gibberish`: some gibberish.\n"
+        "`/help`: this help.\n"
+    )
     send(update, context, help_text)
 
 def main():
