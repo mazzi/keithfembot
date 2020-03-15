@@ -18,8 +18,8 @@ def send(msg):
 
 def about(update, context):
     """ About """
-    send("Keith F'em, a community radio experiment, is presented by Keith in conjuction with SP2. hello@keithfem.com")
-    send("Author: lmazzitelli@pm.me - Coded in Barcelona during the COVID-19 outbreak.")
+    send("Keith F'em, a community radio experiment, is presented by Keith in conjuction with SP2. `hello@keithfem.com`")
+    send("Author: `lmazzitelli@pm.me` - Coded in Barcelona during the COVID-19 outbreak.")
 
 def echo(update, context):
     """ On noncommand i.e message - echo the message on Telegram"""
@@ -56,6 +56,20 @@ def week(update, context):
 def gibberish(update, context):
     send(random.choice(gibberish_phrase))
 
+def help(update, context):
+    """ Help usage. """
+    help_text="""
+    `/about`: the usual stuff that an about command displays.
+    `/current` or `/now`: displays the show that is on air at the moment.
+    `/next`: displays the upcoming show.
+    `/today`: displays the schedule for today.
+    `/tomorrow`: displays the schedule for tomorrow.
+    `/week`: displays the shows for the week.
+    `/gibberish`: some gibberish.
+    `/help`: this help.
+    """
+    send(help_text)
+
 def main():
     """ Start the bot. """
     updater = Updater(token=HTTP_API_TOKEN, use_context=True)
@@ -71,6 +85,7 @@ def main():
     dp.add_handler(CommandHandler('tomorrow', tomorrow))
     dp.add_handler(CommandHandler('week', week))
     dp.add_handler(CommandHandler('gibberish', gibberish))
+    dp.add_handler(CommandHandler('help', help))
     dp.add_handler(MessageHandler(Filters.text, echo))
     dp.add_error_handler(error)
 
