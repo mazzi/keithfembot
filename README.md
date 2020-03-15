@@ -9,6 +9,7 @@ A friendly bot for [keithfem.com](https://www.keithfem.com/)
 * `/week`: displays the shows for the week.
 * `/gibberish`: some gibberish.
 * `/about`: the usual stuff that an about command displays.
+* `/help`: help about the commands.
 
 ## Config
 Create a .envrc with these environment variables.
