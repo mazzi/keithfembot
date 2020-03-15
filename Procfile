@@ -1,1 +1,1 @@
-web: gunicorn keithfembot:app --log-file=-
+web: python keithfembot.py
