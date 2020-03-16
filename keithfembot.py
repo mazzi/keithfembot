@@ -2,6 +2,7 @@ from config import *
 import random
 import requests
 from http import HTTPStatus
+from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 
@@ -9,14 +10,14 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                      level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-gibberish_phrase = ["Good things come to those who wait.",
-                    "Patience is a virtue.",
-                    "The early bird gets the worm.",
-                    "A wise man once said, everything in its own time and place.",
-                    "Fortune cookies rarely share fortunes."]
+gibberish_phrase = ["_Good things come to those who wait._",
+                    "_Patience is a virtue._",
+                    "_The early bird gets the worm._",
+                    "_A wise man once said, everything in its own time and place._",
+                    "_Fortune cookies rarely share fortunes._"]
 
 def send(update, context, msg):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=msg)
+    context.bot.send_message(chat_id=update.effective_chat.id, text=msg, parse_mode=ParseMode.MARKDOWN)
 
 def about(update, context):
     """ About """
@@ -33,11 +34,14 @@ def error(update, context):
 
 def now(update, context):
     """ Displays the show that is on air at the moment. """
-    response = requests.get(KEITHFEM_BASE_URL + "live-info")
-    if response.status_code == HTTPStatus.OK:
+    response = requests.get("https://keithfem2.airtime.pro/api/live-info")
+    if response.status_code == 200:
         response = response.json()
-        name = response[0]['currentShow']['name']
-        send(update, context, name)
+        logger.info(response)
+        name = response['currentShow'][0]['name']
+        starts = response['currentShow'][0]['starts'][-8:-3]
+        ends = response['currentShow'][0]['ends'][-8:-3]
+        send(update, context, "*%s*, (_starts: %s, ends: %s 🇩🇪 time!_)" % (name, starts, ends,))
     else:
         send(update, context, "We cannot tell you at the moment.")
 
