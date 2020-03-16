@@ -24,8 +24,9 @@ def send(update, context, msg):
 
 def about(update, context):
     """ About """
-    send(update, context, "Keith F'em, a community radio experiment, is presented by Keith in conjuction with SP2. `hello@keithfem.com`")
-    send(update, context, "Bot created in Barcelona during the COVID-19 outbreak quarantine (March 2020).")
+    msg = "Keith F'em, a community radio experiment, is presented by Keith in conjuction with SP2. `hello@keithfem.com`\n"
+    msg += "Bot created in Barcelona during the COVID-19 outbreak quarantine (March 2020) ✌"
+    send(update, context, msg)
 
 def echo(update, context):
     """ On noncommand i.e message - echo the message on Telegram"""
@@ -109,7 +110,7 @@ def week(update, context):
                 name = show['name']
                 starts = show['starts'][-8:-3]
                 ends = show['ends'][-8:-3]
-                msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
+                # msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
         send(update, context, msg)
     else:
         send(update, context, "We cannot tell you at the moment.")
