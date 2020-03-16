@@ -99,16 +99,18 @@ def week(update, context):
     """ Displays the schedule for the week. """
     response = requests.get("https://keithfem2.airtime.pro/api/week-info")
     if response.status_code == 200:
+        msg = ""
         response = response.json()
         for day, shows in response:
             if 'next' in day:
                 continue
-            send(update, context, "*%s* (_🇩🇪 time!_)" % (day,))
+            msg += "Shows for %s _🇩🇪 time!_\n" % (day,)
             for show in shows:
                 name = show['name']
                 starts = show['starts'][-8:-3]
                 ends = show['ends'][-8:-3]
-                send(update, context, "*%s*, (_starts: %s, ends: %s_)" % (name, starts, ends,))
+                msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
+        send(update, context, msg)
     else:
         send(update, context, "We cannot tell you at the moment.")
 
