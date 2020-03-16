@@ -13,6 +13,14 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                      level=logging.INFO)
 logger = logging.getLogger(__name__)
 
+DAYS = ['monday',
+        'tuesday',
+        'wednesday',
+        'thursday',
+        'friday',
+        'saturday',
+        'sunday']
+
 gibberish_phrase = ["_Good things come to those who wait._",
                     "_Patience is a virtue._",
                     "_The early bird gets the worm._",
@@ -103,7 +111,7 @@ def week(update, context):
         msg = ""
         response = response.json()
         for day in response:
-            if 'next' in day:
+            if day not in DAYS:
                 continue
             msg += "Shows for %s _🇩🇪 time!_\n" % (day,)
             for show in response[day]:
