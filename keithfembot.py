@@ -99,7 +99,7 @@ def tomorrow(update, context):
             starts = show['starts'][-8:-3]
             ends = show['ends'][-8:-3]
             shows_msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
-        msg = "Shows for %s _🇩🇪 time!_\n" % (day,)
+        msg = "*Shows for %s _🇩🇪 time!_\n" % (day,)
         send(update, context, msg + shows_msg)
     else:
         send(update, context, "We cannot tell you at the moment.")
@@ -113,12 +113,13 @@ def week(update, context):
         for day in response:
             if day not in DAYS:
                 continue
-            msg += "Shows for %s _🇩🇪 time!_\n" % (day,)
+            msg += "*Shows for %s*\n" % (day.capitalize(),)
             for show in response[day]:
                 name = show['name']
                 starts = show['starts'][-8:-3]
                 ends = show['ends'][-8:-3]
                 msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
+            msg += "_ All shows are in 🇩🇪 time!_"
         send(update, context, msg)
     else:
         send(update, context, "We cannot tell you at the moment.")
