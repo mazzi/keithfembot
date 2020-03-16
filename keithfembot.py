@@ -65,12 +65,15 @@ def today(update, context):
     if response.status_code == 200:
         response = response.json()
         my_date = dt.date.today()
-        day = calendar.day_name[my_date.weekday()].lower()
-        for show in response[day]:
+        day = calendar.day_name[my_date.weekday()]
+        shows_msg = ""
+        for show in response[day.lower()]:
             name = show['name']
             starts = show['starts'][-8:-3]
             ends = show['ends'][-8:-3]
-            send(update, context, "*%s*, (_starts: %s, ends: %s 🇩🇪 time!_)" % (name, starts, ends,))
+            shows_msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
+        msg = "Shows for %s _🇩🇪 time!_\n",(day,)
+        send(update, context, msg + shows_msg)
     else:
         send(update, context, "We cannot tell you at the moment.")
 
@@ -80,12 +83,15 @@ def tomorrow(update, context):
     if response.status_code == 200:
         response = response.json()
         my_date = dt.date.today() + dt.timedelta(days=1)
-        day = calendar.day_name[my_date.weekday()].lower()
-        for show in response[day]:
+        day = calendar.day_name[my_date.weekday()]
+        shows_msg = ""
+        for show in response[day.lower()]:
             name = show['name']
             starts = show['starts'][-8:-3]
             ends = show['ends'][-8:-3]
-            send(update, context, "*%s*, (_starts: %s, ends: %s 🇩🇪 time!_)" % (name, starts, ends,))
+            shows_msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
+        msg = "Shows for %s _🇩🇪 time!_\n",(day,)
+        send(update, context, msg + shows_msg)
     else:
         send(update, context, "We cannot tell you at the moment.")
 
