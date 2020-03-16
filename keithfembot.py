@@ -61,7 +61,7 @@ def now(update, context):
 
 def next(update, context):
     """ Displays the upcoming show. """
-    show(udate, context, 'nextShow')
+    show(update, context, 'nextShow')
 
 def day(update,context, on_day):
     response = requests.get(KEITHFEM_BASE_URL + "week-info")
