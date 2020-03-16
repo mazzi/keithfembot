@@ -105,7 +105,7 @@ def week(update, context):
         send(update, context, "We cannot tell you at the moment.")
 
 def gibberish(update, context):
-    response = request.get(FORTUNE_URL)
+    response = requests.get(FORTUNE_URL)
     if response.status_code == HTTPStatus.OK:
         send(update, context, response.json())
     else:
