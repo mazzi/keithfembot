@@ -102,15 +102,15 @@ def week(update, context):
     if response.status_code == 200:
         msg = ""
         response = response.json()
-        for day, shows in response:
+        for day in response:
             if 'next' in day:
                 continue
             msg += "Shows for %s _🇩🇪 time!_\n" % (day,)
-            for show in shows:
+            for show in day:
                 name = show['name']
                 starts = show['starts'][-8:-3]
                 ends = show['ends'][-8:-3]
-                # msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
+                msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
         send(update, context, msg)
     else:
         send(update, context, "We cannot tell you at the moment.")
