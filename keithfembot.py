@@ -66,7 +66,7 @@ def today(update, context):
         response = response.json()
         my_date = dt.date.today()
         day = calendar.day_name[my_date.weekday()].lower()
-        for show in reponse[day]:
+        for show in response[day]:
             name = show['name']
             starts = show['starts'][-8:-3]
             ends = show['ends'][-8:-3]
@@ -81,7 +81,7 @@ def tomorrow(update, context):
         response = response.json()
         my_date = dt.date.today() + dt.timedelta(days=1)
         day = calendar.day_name[my_date.weekday()].lower()
-        for show in reponse[day]:
+        for show in response[day]:
             name = show['name']
             starts = show['starts'][-8:-3]
             ends = show['ends'][-8:-3]
