@@ -21,12 +21,6 @@ DAYS = ['monday',
         'saturday',
         'sunday']
 
-gibberish_phrase = ["_Good things come to those who wait._",
-                    "_Patience is a virtue._",
-                    "_The early bird gets the worm._",
-                    "_A wise man once said, everything in its own time and place._",
-                    "_Fortune cookies rarely share fortunes._"]
-
 def send(update, context, msg):
     context.bot.send_message(chat_id=update.effective_chat.id, text=html.unescape(msg), parse_mode=ParseMode.MARKDOWN)
 
@@ -111,7 +105,11 @@ def week(update, context):
         send(update, context, "We cannot tell you at the moment.")
 
 def gibberish(update, context):
-    send(update, context, random.choice(gibberish_phrase))
+    response = request.get(FORTUNE_URL)
+    if response.status_code == HTTPStatus.OK:
+        send(update, context, response.json())
+    else:
+        send(update, context, "Nothing to say about that.")
 
 def help(update, context):
     """ Help usage. """
