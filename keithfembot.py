@@ -1,6 +1,9 @@
 from config import *
+import html
 import random
 import requests
+import datetime as dt
+import calendar
 from http import HTTPStatus
 from telegram import ParseMode
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
@@ -17,12 +20,12 @@ gibberish_phrase = ["_Good things come to those who wait._",
                     "_Fortune cookies rarely share fortunes._"]
 
 def send(update, context, msg):
-    context.bot.send_message(chat_id=update.effective_chat.id, text=msg, parse_mode=ParseMode.MARKDOWN)
+    context.bot.send_message(chat_id=update.effective_chat.id, text=html.unescape(msg), parse_mode=ParseMode.MARKDOWN)
 
 def about(update, context):
     """ About """
     send(update, context, "Keith F'em, a community radio experiment, is presented by Keith in conjuction with SP2. `hello@keithfem.com`")
-    send(update, context, "Bot created in Barcelona during the COVID-19 outbreak quarantine.")
+    send(update, context, "Bot created in Barcelona during the COVID-19 outbreak quarantine (March 2020).")
 
 def echo(update, context):
     """ On noncommand i.e message - echo the message on Telegram"""
@@ -37,7 +40,6 @@ def now(update, context):
     response = requests.get("https://keithfem2.airtime.pro/api/live-info")
     if response.status_code == 200:
         response = response.json()
-        logger.info(response)
         name = response['currentShow'][0]['name']
         starts = response['currentShow'][0]['starts'][-8:-3]
         ends = response['currentShow'][0]['ends'][-8:-3]
@@ -47,20 +49,62 @@ def now(update, context):
 
 def next(update, context):
     """ Displays the upcoming show. """
-    send(update, context, "not done yet!")
+    response = requests.get("https://keithfem2.airtime.pro/api/live-info")
+    if response.status_code == 200:
+        response = response.json()
+        name = response['nextShow'][0]['name']
+        starts = response['nextShow'][0]['starts'][-8:-3]
+        ends = response['nextShow'][0]['ends'][-8:-3]
+        send(update, context, "*%s*, (_starts: %s, ends: %s 🇩🇪 time!_)" % (name, starts, ends,))
+    else:
+        send(update, context, "We cannot tell you at the moment.")
 
 def today(update, context):
     """ Displays the schedule for today. """
-    send(update, context, "not done yet!")
+    response = requests.get("https://keithfem2.airtime.pro/api/week-info")
+    if response.status_code == 200:
+        response = response.json()
+        my_date = dt.date.today()
+        day = calendar.day_name[my_date.weekday()].lower()
+        for show in reponse[day]:
+            name = show['name']
+            starts = show['starts'][-8:-3]
+            ends = show['ends'][-8:-3]
+            send(update, context, "*%s*, (_starts: %s, ends: %s 🇩🇪 time!_)" % (name, starts, ends,))
+    else:
+        send(update, context, "We cannot tell you at the moment.")
 
 def tomorrow(update, context):
     """ Displays the schedule for tomorrow. """
-    send(update, context, "not done yet!")
+    response = requests.get("https://keithfem2.airtime.pro/api/week-info")
+    if response.status_code == 200:
+        response = response.json()
+        my_date = dt.date.today() + dt.timedelta(days=1)
+        day = calendar.day_name[my_date.weekday()].lower()
+        for show in reponse[day]:
+            name = show['name']
+            starts = show['starts'][-8:-3]
+            ends = show['ends'][-8:-3]
+            send(update, context, "*%s*, (_starts: %s, ends: %s 🇩🇪 time!_)" % (name, starts, ends,))
+    else:
+        send(update, context, "We cannot tell you at the moment.")
 
 def week(update, context):
     """ Displays the schedule for the week. """
-    KEITHFEM_BASE_URL + "week-info"
-    send(update, context, "not done yet!")
+    response = requests.get("https://keithfem2.airtime.pro/api/week-info")
+    if response.status_code == 200:
+        response = response.json()
+        for day, shows in response:
+            if 'next' in day:
+                continue
+            send(update, context, "*%s* (_🇩🇪 time!_)" % (day,))
+            for show in shows:
+                name = show['name']
+                starts = show['starts'][-8:-3]
+                ends = show['ends'][-8:-3]
+                send(update, context, "*%s*, (_starts: %s, ends: %s_)" % (name, starts, ends,))
+    else:
+        send(update, context, "We cannot tell you at the moment.")
 
 def gibberish(update, context):
     send(update, context, random.choice(gibberish_phrase))
