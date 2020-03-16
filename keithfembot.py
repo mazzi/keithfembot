@@ -106,7 +106,7 @@ def week(update, context):
             if 'next' in day:
                 continue
             msg += "Shows for %s _🇩🇪 time!_\n" % (day,)
-            for show in re[day]:
+            for show in response[day]:
                 name = show['name']
                 starts = show['starts'][-8:-3]
                 ends = show['ends'][-8:-3]
