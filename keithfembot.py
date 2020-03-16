@@ -1,5 +1,7 @@
 from config import *
 import random
+import requests
+from http import HTTPStatus
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 import logging
 
@@ -29,13 +31,15 @@ def error(update, context):
     """ Log Errors """
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
-def current(update, context):
-    """ Displays the show that is on air at the moment. """
-    send(update, context, "not done yet!")
-
 def now(update, context):
     """ Displays the show that is on air at the moment. """
-    send(update, context, "not done yet!")
+    response = requests.get(KEITHFEM_BASE_URL + "live-info")
+    if response.status_code == HTTPStatus.OK:
+        response = response.json()
+        name = response[0]['currentShow']['name']
+        send(update, context, name)
+    else:
+        send(update, context, "We cannot tell you at the moment.")
 
 def next(update, context):
     """ Displays the upcoming show. """
@@ -51,6 +55,7 @@ def tomorrow(update, context):
 
 def week(update, context):
     """ Displays the schedule for the week. """
+    KEITHFEM_BASE_URL + "week-info"
     send(update, context, "not done yet!")
 
 def gibberish(update, context):
@@ -78,7 +83,6 @@ def main():
     dp = updater.dispatcher
 
     dp.add_handler(CommandHandler('about', about))
-    dp.add_handler(CommandHandler('current', current))
     dp.add_handler(CommandHandler('now', now))
     dp.add_handler(CommandHandler('next', next))
     dp.add_handler(CommandHandler('today', today))
