@@ -17,6 +17,7 @@ Create a .envrc with these environment variables. Use [direnv](https://direnv.ne
 ```
 export KEITHFEM_BASE_URL=
 export HTTP_API_TOKEN=
+export FORTUNE_URL=https://anothervps.com/api/fortune/
 ```
 
 The HTTP_API_TOKEN is from [@Botfather](https://web.telegram.org/#/im?p=@BotFather)
