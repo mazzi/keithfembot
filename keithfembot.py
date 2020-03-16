@@ -44,65 +44,51 @@ def error(update, context):
     """ Log Errors """
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
-def now(update, context):
+def show(update, context, when):
     """ Displays the show that is on air at the moment. """
     response = requests.get(KEITHFEM_BASE_URL + "live-info")
     if response.status_code == HTTPStatus.OK:
         response = response.json()
-        name = response['currentShow'][0]['name']
-        starts = response['currentShow'][0]['starts'][-8:-3]
-        ends = response['currentShow'][0]['ends'][-8:-3]
+        name = response[when][0]['name']
+        starts = response[when][0]['starts'][-8:-3]
+        ends = response[when][0]['ends'][-8:-3]
         send(update, context, "*%s*, (_starts: %s, ends: %s 🇩🇪 time!_)" % (name, starts, ends,))
     else:
         send(update, context, "We cannot tell you at the moment.")
 
+def now(update, context):
+    show(update,context, 'currentShow')
+
 def next(update, context):
     """ Displays the upcoming show. """
-    response = requests.get(KEITHFEM_BASE_URL + "live-info")
+    show(udate, context, 'nextShow')
+
+def day(update,context, on_day):
+    response = requests.get(KEITHFEM_BASE_URL + "week-info")
     if response.status_code == HTTPStatus.OK:
         response = response.json()
-        name = response['nextShow'][0]['name']
-        starts = response['nextShow'][0]['starts'][-8:-3]
-        ends = response['nextShow'][0]['ends'][-8:-3]
-        send(update, context, "*%s*, (_starts: %s, ends: %s 🇩🇪 time!_)" % (name, starts, ends,))
+        shows_msg = ""
+        for show in response[on_day.lower()]:
+            name = show['name']
+            starts = show['starts'][-8:-3]
+            ends = show['ends'][-8:-3]
+            shows_msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
+        msg = "Shows for %s _🇩🇪 time!_\n" % (on_day,)
+        send(update, context, msg + shows_msg)
     else:
         send(update, context, "We cannot tell you at the moment.")
 
 def today(update, context):
     """ Displays the schedule for today. """
-    response = requests.get(KEITHFEM_BASE_URL + "week-info")
-    if response.status_code == HTTPStatus.OK:
-        response = response.json()
-        my_date = dt.date.today()
-        day = calendar.day_name[my_date.weekday()]
-        shows_msg = ""
-        for show in response[day.lower()]:
-            name = show['name']
-            starts = show['starts'][-8:-3]
-            ends = show['ends'][-8:-3]
-            shows_msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
-        msg = "Shows for %s _🇩🇪 time!_\n" % (day,)
-        send(update, context, msg + shows_msg)
-    else:
-        send(update, context, "We cannot tell you at the moment.")
+    my_date = dt.date.today()
+    today = calendar.day_name[my_date.weekday()]
+    day(update, context, today)
 
 def tomorrow(update, context):
     """ Displays the schedule for tomorrow. """
-    response = requests.get(KEITHFEM_BASE_URL + "week-info")
-    if response.status_code == HTTPStatus.OK:
-        response = response.json()
-        my_date = dt.date.today() + dt.timedelta(days=1)
-        day = calendar.day_name[my_date.weekday()]
-        shows_msg = ""
-        for show in response[day.lower()]:
-            name = show['name']
-            starts = show['starts'][-8:-3]
-            ends = show['ends'][-8:-3]
-            shows_msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
-        msg = "Shows for %s _🇩🇪 time!_\n" % (day,)
-        send(update, context, msg + shows_msg)
-    else:
-        send(update, context, "We cannot tell you at the moment.")
+    my_date = dt.date.today() + dt.timedelta(days=1)
+    tomorrow = calendar.day_name[my_date.weekday()]
+    day(update, context, tomorrow)
 
 def week(update, context):
     """ Displays the schedule for the week. """
