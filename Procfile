@@ -1,1 +1,1 @@
-web: python keithfembot.py
+worker: python keithfembot.py
