@@ -119,7 +119,7 @@ def week(update, context):
                 starts = show['starts'][-8:-3]
                 ends = show['ends'][-8:-3]
                 msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
-            msg += "_ All shows are in 🇩🇪 time!_"
+        msg += "_ All shows are in 🇩🇪 time!_"
         send(update, context, msg)
     else:
         send(update, context, "We cannot tell you at the moment.")
