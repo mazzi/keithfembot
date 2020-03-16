@@ -46,8 +46,8 @@ def error(update, context):
 
 def now(update, context):
     """ Displays the show that is on air at the moment. """
-    response = requests.get("https://keithfem2.airtime.pro/api/live-info")
-    if response.status_code == 200:
+    response = requests.get(KEITHFEM_BASE_URL + "live-info")
+    if response.status_code == HTTPStatus.OK:
         response = response.json()
         name = response['currentShow'][0]['name']
         starts = response['currentShow'][0]['starts'][-8:-3]
@@ -58,8 +58,8 @@ def now(update, context):
 
 def next(update, context):
     """ Displays the upcoming show. """
-    response = requests.get("https://keithfem2.airtime.pro/api/live-info")
-    if response.status_code == 200:
+    response = requests.get(KEITHFEM_BASE_URL + "live-info")
+    if response.status_code == HTTPStatus.OK:
         response = response.json()
         name = response['nextShow'][0]['name']
         starts = response['nextShow'][0]['starts'][-8:-3]
@@ -70,8 +70,8 @@ def next(update, context):
 
 def today(update, context):
     """ Displays the schedule for today. """
-    response = requests.get("https://keithfem2.airtime.pro/api/week-info")
-    if response.status_code == 200:
+    response = requests.get(KEITHFEM_BASE_URL + "week-info")
+    if response.status_code == HTTPStatus.OK:
         response = response.json()
         my_date = dt.date.today()
         day = calendar.day_name[my_date.weekday()]
@@ -88,8 +88,8 @@ def today(update, context):
 
 def tomorrow(update, context):
     """ Displays the schedule for tomorrow. """
-    response = requests.get("https://keithfem2.airtime.pro/api/week-info")
-    if response.status_code == 200:
+    response = requests.get(KEITHFEM_BASE_URL + "week-info")
+    if response.status_code == HTTPStatus.OK:
         response = response.json()
         my_date = dt.date.today() + dt.timedelta(days=1)
         day = calendar.day_name[my_date.weekday()]
@@ -106,8 +106,8 @@ def tomorrow(update, context):
 
 def week(update, context):
     """ Displays the schedule for the week. """
-    response = requests.get("https://keithfem2.airtime.pro/api/week-info")
-    if response.status_code == 200:
+    response = requests.get(KEITHFEM_BASE_URL + "week-info")
+    if response.status_code == HTTPStatus.OK:
         msg = ""
         response = response.json()
         for day in response:
