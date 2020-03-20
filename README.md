@@ -21,7 +21,9 @@ export FORTUNE_URL=https://anothervps.com/api/fortune/
 ```
 
 KEITHFEM_BASE_URL is the [airtime](https://www.airtime.pro/) base url of the radio.
+
 HTTP_API_TOKEN is from [@Botfather](https://web.telegram.org/#/im?p=@BotFather)
+
 FORTUNE_URL is a fortunes service.
 
 ## Deployment
