@@ -38,7 +38,7 @@ def show(update, context, when):
     if response.status_code == HTTPStatus.OK:
         response = response.json()
         show = parse_show(response[when][0]) # just to shift the result
-        send(update, context, "*%s*, (%s - %s _🇩🇪 time!_)" % show[1:] + show[:1])
+        send(update, context, "*%s*, (%s - %s _🇩🇪 time!_)" % (show[1:] + show[:1]))
     else:
         send(update, context, "We cannot tell you at the moment.")
 
