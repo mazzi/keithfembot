@@ -45,16 +45,19 @@ def next(update, context):
     """ Displays the upcoming show. """
     show(update, context, 'nextShow')
 
+def parse_response(show):
+    name = show['name']
+    starts = show['starts'][-8:-3]
+    ends = show['ends'][-8:-3]
+    return (starts, ends, name,)
+
 def day(update,context, on_day):
     response = requests.get(KEITHFEM_BASE_URL + "week-info")
     if response.status_code == HTTPStatus.OK:
         response = response.json()
         shows_msg = ""
         for show in response[on_day.lower()]:
-            name = show['name']
-            starts = show['starts'][-8:-3]
-            ends = show['ends'][-8:-3]
-            shows_msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
+            shows_msg += "(%s - %s) - *%s*\n" % parse_show(show)
         msg = "Shows for %s _🇩🇪 time!_\n" % (on_day,)
         send(update, context, msg + shows_msg)
     else:
@@ -85,10 +88,7 @@ def week(update, context):
                 continue
             msg += "*Shows for %s*\n" % (day.capitalize(),)
             for show in response[day]:
-                name = show['name']
-                starts = show['starts'][-8:-3]
-                ends = show['ends'][-8:-3]
-                msg += "(%s - %s) - *%s*\n" % (starts, ends, name,)
+                msg += "(%s - %s) - *%s*\n" % parse_show(show)
         msg += "_ All shows are in 🇩🇪 time!_"
         send(update, context, msg)
     else:
