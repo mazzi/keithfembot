@@ -30,10 +30,6 @@ def about(update, context):
     msg += "Bot created in Barcelona during the COVID-19 outbreak quarantine (March 2020) ✌"
     send(update, context, msg)
 
-def echo(update, context):
-    """ On noncommand i.e message - echo the message on Telegram"""
-    update.message.reply_text(update.message.text)
-
 def error(update, context):
     """ Log Errors """
     logger.warning('Update "%s" caused error "%s"', update, context.error)
@@ -140,7 +136,6 @@ def main():
     dp.add_handler(CommandHandler('week', week))
     dp.add_handler(CommandHandler('gibberish', gibberish))
     dp.add_handler(CommandHandler('help', help))
-    #dp.add_handler(MessageHandler(Filters.text, echo))
     dp.add_error_handler(error)
 
     # Start the Bot
