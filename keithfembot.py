@@ -46,7 +46,7 @@ def show(update, context, when):
         name = response[when][0]['name']
         starts = response[when][0]['starts'][-8:-3]
         ends = response[when][0]['ends'][-8:-3]
-        send(update, context, "*%s*, (_starts: %s, ends: %s 🇩🇪 time!_)" % (name, starts, ends,))
+        send(update, context, "*%s*, (%s - %s 🇩🇪 time!_)" % (name, starts, ends,))
     else:
         send(update, context, "We cannot tell you at the moment.")
 
