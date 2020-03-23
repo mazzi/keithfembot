@@ -13,14 +13,6 @@ logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s
                      level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-DAYS = ['monday',
-        'tuesday',
-        'wednesday',
-        'thursday',
-        'friday',
-        'saturday',
-        'sunday']
-
 def send(update, context, msg):
     context.bot.send_message(chat_id=update.effective_chat.id, text=html.unescape(msg), parse_mode=ParseMode.MARKDOWN)
 
@@ -82,12 +74,14 @@ def tomorrow(update, context):
 
 def week(update, context):
     """ Displays the schedule for the week. """
+    days_of_the_week = []
+    for day in range(0,7): days_of_the_week.append(calendar.day_name[day].lower())
     response = requests.get(KEITHFEM_BASE_URL + "week-info")
     if response.status_code == HTTPStatus.OK:
         msg = ""
         response = response.json()
         for day in response:
-            if day not in DAYS:
+            if day not in days_of_the_week:
                 continue
             msg += "*Shows for %s*\n" % (day.capitalize(),)
             for show in response[day]:
