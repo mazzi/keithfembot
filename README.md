@@ -1,5 +1,5 @@
 # Keithfem Bot
-A friendly bot for [keithfem.com](https://www.keithfem.com/)
+A bot for [www.keithfem.com](https://www.keithfem.com/) that displays the schedule of the radio shows.
 
 ## Commands
 * `/now` : displays the show that is on air at the moment.
@@ -20,7 +20,11 @@ export HTTP_API_TOKEN=
 export FORTUNE_URL=https://anothervps.com/api/fortune/
 ```
 
-The HTTP_API_TOKEN is from [@Botfather](https://web.telegram.org/#/im?p=@BotFather)
+KEITHFEM_BASE_URL is the [airtime](https://www.airtime.pro/) base url of the radio.
+
+HTTP_API_TOKEN is from [@Botfather](https://web.telegram.org/#/im?p=@BotFather)
+
+FORTUNE_URL is a fortunes service.
 
 ## Deployment
 
