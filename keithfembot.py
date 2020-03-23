@@ -43,6 +43,7 @@ def show(update, context, when):
         send(update, context, "We cannot tell you at the moment.")
 
 def now(update, context):
+    """ Displays the show that is in the air now. """
     show(update,context, 'currentShow')
 
 def next(update, context):
@@ -50,6 +51,7 @@ def next(update, context):
     show(update, context, 'nextShow')
 
 def day(update,context, on_day):
+    """ Displays the schedule for the weekday on_day. """
     response = requests.get(KEITHFEM_BASE_URL + "week-info")
     if response.status_code == HTTPStatus.OK:
         response = response.json()
@@ -93,6 +95,7 @@ def week(update, context):
         send(update, context, "We cannot tell you at the moment.")
 
 def gibberish(update, context):
+    """ Displays a fortune. """
     response = requests.get(FORTUNE_URL)
     if response.status_code == HTTPStatus.OK:
         send(update, context, response.json())
@@ -114,10 +117,9 @@ def help(update, context):
     send(update, context, help_text)
 
 def main():
-    """ Start the bot. """
+    """ Starts the bot. """
     updater = Updater(token=HTTP_API_TOKEN, use_context=True)
 
-    # Get the dispatcher to register handlers
     dp = updater.dispatcher
 
     dp.add_handler(CommandHandler('about', about))
@@ -130,7 +132,6 @@ def main():
     dp.add_handler(CommandHandler('help', help))
     dp.add_error_handler(error)
 
-    # Start the Bot
     updater.start_polling()
     updater.idle()
 
