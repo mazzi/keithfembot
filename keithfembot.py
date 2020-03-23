@@ -63,17 +63,18 @@ def day(update,context, on_day):
     else:
         send(update, context, "We cannot tell you at the moment.")
 
+def schedule_day(update, context, timedelta):
+    my_date = dt.date.today() + dt.timedelta(days=timedelta)
+    tomorrow = calendar.day_name[my_date.weekday()]
+    day(update, context, tomorrow)
+
 def today(update, context):
     """ Displays the schedule for today. """
-    my_date = dt.date.today()
-    today = calendar.day_name[my_date.weekday()]
-    day(update, context, today)
+    schedule_day(update, context, timedelta=0)
 
 def tomorrow(update, context):
     """ Displays the schedule for tomorrow. """
-    my_date = dt.date.today() + dt.timedelta(days=1)
-    tomorrow = calendar.day_name[my_date.weekday()]
-    day(update, context, tomorrow)
+    schedule_day(update, context, timedelta=1)
 
 def week(update, context):
     """ Displays the schedule for the week. """
