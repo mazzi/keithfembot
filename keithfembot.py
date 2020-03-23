@@ -45,7 +45,7 @@ def next(update, context):
     """ Displays the upcoming show. """
     show(update, context, 'nextShow')
 
-def parse_response(show):
+def parse_show(show):
     name = show['name']
     starts = show['starts'][-8:-3]
     ends = show['ends'][-8:-3]
