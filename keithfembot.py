@@ -37,7 +37,8 @@ def show(update, context, when):
     response = requests.get(KEITHFEM_BASE_URL + "live-info")
     if response.status_code == HTTPStatus.OK:
         response = response.json()
-        send(update, context, "*%s*, (%s - %s _🇩🇪 time!_)" % parse_show(response[when][0]))
+        show = parse_show(response[when][0]) # just to shift the result
+        send(update, context, "*%s*, (%s - %s _🇩🇪 time!_)" % show[1:] + show[:1])
     else:
         send(update, context, "We cannot tell you at the moment.")
 
