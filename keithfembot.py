@@ -26,15 +26,18 @@ def error(update, context):
     """ Log Errors """
     logger.warning('Update "%s" caused error "%s"', update, context.error)
 
+def parse_show(show):
+    name = show['name']
+    starts = show['starts'][-8:-3]
+    ends = show['ends'][-8:-3]
+    return (starts, ends, name,)
+
 def show(update, context, when):
     """ Displays the show that is on air at the moment. """
     response = requests.get(KEITHFEM_BASE_URL + "live-info")
     if response.status_code == HTTPStatus.OK:
         response = response.json()
-        name = response[when][0]['name']
-        starts = response[when][0]['starts'][-8:-3]
-        ends = response[when][0]['ends'][-8:-3]
-        send(update, context, "*%s*, (%s - %s _🇩🇪 time!_)" % (name, starts, ends,))
+        send(update, context, "*%s*, (%s - %s _🇩🇪 time!_)" % parse_show(response[when][0]))
     else:
         send(update, context, "We cannot tell you at the moment.")
 
@@ -44,12 +47,6 @@ def now(update, context):
 def next(update, context):
     """ Displays the upcoming show. """
     show(update, context, 'nextShow')
-
-def parse_show(show):
-    name = show['name']
-    starts = show['starts'][-8:-3]
-    ends = show['ends'][-8:-3]
-    return (starts, ends, name,)
 
 def day(update,context, on_day):
     response = requests.get(KEITHFEM_BASE_URL + "week-info")
