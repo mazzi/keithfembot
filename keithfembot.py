@@ -105,12 +105,12 @@ def gibberish(update, context):
 
 def beer(update, context):
     """ Beer ad """
-    message = "I'm gonna plug this right here. "
-        "Our good friends at Berliner Berg are delivering "
-        "crate of beer to your door, AND all of the money "
-        "goes to support Keith. It's really cool of them.\n"
-        "[https://tinyurl.com/keithsolikiste]"
-        "Anyway, if you wanna drink some pale ale, "
+    message = "I'm gonna plug this right here. " \
+        "Our good friends at Berliner Berg are delivering " \
+        "crate of beer to your door, AND all of the money " \
+        "goes to support Keith. It's really cool of them.\n" \
+        "[https://tinyurl.com/keithsolikiste]\n" \
+        "Anyway, if you wanna drink some pale ale, " \
         "get it here and help us out. Love y'all!\n"
     send(update, context, message)
 
