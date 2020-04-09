@@ -138,7 +138,7 @@ def beer(update, context):
         "Our good friends at Berliner Berg are delivering "
         "crate of beer to your door, AND all of the money "
         "goes to support Keith. It's really cool of them.\n"
-        "[https://tinyurl.com/keithsolikiste]\n"
+        "[https://tinyurl.com/keithsolikisten]\n"
         "Anyway, if you wanna drink some pale ale, "
         "get it here and help us out. Love y'all!\n"
     )
