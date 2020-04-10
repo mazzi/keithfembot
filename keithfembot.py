@@ -5,7 +5,7 @@ import logging
 from http import HTTPStatus
 
 import requests
-from config import FORTUNE_URL, HTTP_API_TOKEN, KEITHFEM_BASE_URL
+from config import DADJOKE_URL, FORTUNE_URL, HTTP_API_TOKEN, KEITHFEM_BASE_URL
 from telegram import ParseMode
 from telegram.ext import CommandHandler, Updater
 
@@ -145,6 +145,19 @@ def beer(update, context):
     send(update, context, message)
 
 
+def joke(update, context):
+    """ Tells a dad joke. """
+    headers = {
+        "User-Agent": "Keith F'em Bot (https://github.com/mazzi/keithfembot)",
+        "Accept": "text/plain",
+    }
+    response = requests.get(DADJOKE_URL, headers=headers)
+    if response.status_code == HTTPStatus.OK:
+        send(update, context, response.text)
+    else:
+        send(update, context, "Nothing to say about that.")
+
+
 def donate(update, context):
     """" Displays donate link """
     send(update, context, "[https://paypal.me/keithfem]")
@@ -182,6 +195,7 @@ def main():
     dp.add_handler(CommandHandler("gibberish", gibberish))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("beer", beer))
+    dp.add_handler(CommandHandler("joke", joke))
     dp.add_handler(CommandHandler("donate", donate))
     dp.add_error_handler(error)
 
