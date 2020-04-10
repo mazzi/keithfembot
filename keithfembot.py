@@ -145,6 +145,11 @@ def beer(update, context):
     send(update, context, message)
 
 
+def donate(update, context):
+    """" Displays donate link """
+    send(update, context, "[https://paypal.me/keithfem]")
+
+
 def help(update, context):
     """ Help usage. """
     help_text = (
@@ -156,6 +161,7 @@ def help(update, context):
         "`/week`: displays the shows for the week.\n"
         "`/gibberish`: some gibberish.\n"
         "`/beer`: do you want some beer uh?\n"
+        "`/donate`: donate to Keith F'em.\n"
         "`/help`: this help.\n"
     )
     send(update, context, help_text)
@@ -176,6 +182,7 @@ def main():
     dp.add_handler(CommandHandler("gibberish", gibberish))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("beer", beer))
+    dp.add_handler(CommandHandler("donate", donate))
     dp.add_error_handler(error)
 
     updater.start_polling()
