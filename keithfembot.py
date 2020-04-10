@@ -174,6 +174,7 @@ def help(update, context):
         "`/week`: displays the shows for the week.\n"
         "`/gibberish`: some gibberish.\n"
         "`/beer`: do you want some beer uh?\n"
+        "`/joke`: bot, tell me a joke.\n"
         "`/donate`: donate to Keith F'em.\n"
         "`/help`: this help.\n"
     )
