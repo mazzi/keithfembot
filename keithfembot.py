@@ -89,7 +89,7 @@ def schedule_day(update, context, timedelta):
     my_date = dt.date.today() + dt.timedelta(days=timedelta)
     day = calendar.day_name[my_date.weekday()]
     if timedelta and day == "Monday":  # week finishes on Sunday
-        day = "next" + day
+        day = str("next" + day)
     day(update, context, day)
 
 
