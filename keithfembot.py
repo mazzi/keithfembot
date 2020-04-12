@@ -90,7 +90,7 @@ def schedule_day(update, context, timedelta):
     on_day = calendar.day_name[my_date.weekday()]
     if timedelta and on_day == calendar.day_name[calendar.firstweekday()]:
         on_day = "next" + on_day
-    day(update, context, day)
+    day(update, context, on_day)
 
 
 def today(update, context):
