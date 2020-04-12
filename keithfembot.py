@@ -79,7 +79,7 @@ def day(update, context, on_day):
         shows_msg = ""
         for show in response[on_day.lower()]:
             shows_msg += "(%s - %s) - *%s*\n" % parse_show(show)
-        msg = "Shows for %s _🇩🇪 time!_\n" % (on_day,)
+        msg = "Shows for %s _🇩🇪 time!_\n" % (on_day.replace("next", ""),)
         send(update, context, msg + shows_msg)
     else:
         send(update, context, "We cannot tell you at the moment.")
