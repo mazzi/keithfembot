@@ -21,6 +21,7 @@ Create a .envrc with these environment variables. Use [direnv](https://direnv.ne
 export KEITHFEM_BASE_URL=
 export HTTP_API_TOKEN=
 export FORTUNE_URL=https://anothervps.com/api/fortune/
+export DADJOKE_URL=https://icanhazdadjoke.com/
 ```
 
 KEITHFEM_BASE_URL is the [airtime](https://www.airtime.pro/) base url of the radio.
@@ -28,6 +29,8 @@ KEITHFEM_BASE_URL is the [airtime](https://www.airtime.pro/) base url of the rad
 HTTP_API_TOKEN is from [@Botfather](https://web.telegram.org/#/im?p=@BotFather)
 
 FORTUNE_URL is a fortunes service.
+
+DADJOKE_URL is a jokes service.
 
 ## Deployment
 
