@@ -133,20 +133,6 @@ def gibberish(update, context):
         send(update, context, "Nothing to say about that.")
 
 
-def beer(update, context):
-    """ Beer ad """
-    message = (
-        "I'm gonna plug this right here. "
-        "Our good friends at Berliner Berg are delivering "
-        "crate of beer to your door, AND all of the money "
-        "goes to support Keith. It's really cool of them.\n"
-        "[https://tinyurl.com/keithsolikisten]\n"
-        "Anyway, if you wanna drink some pale ale, "
-        "get it here and help us out. Love y'all!\n"
-    )
-    send(update, context, message)
-
-
 def joke(update, context):
     """ Tells a dad joke. """
     headers = {
@@ -175,7 +161,6 @@ def help(update, context):
         "`/tomorrow`: displays the schedule for tomorrow.\n"
         "`/week`: displays the shows for the week.\n"
         "`/gibberish`: some gibberish.\n"
-        "`/beer`: do you want some beer uh?\n"
         "`/joke`: KeithF'em BotMeister, tell me a joke.\n"
         "`/donate`: donate to Keith F'em.\n"
         "`/help`: this help.\n"
@@ -197,7 +182,6 @@ def main():
     dp.add_handler(CommandHandler("week", week))
     dp.add_handler(CommandHandler("gibberish", gibberish))
     dp.add_handler(CommandHandler("help", help))
-    dp.add_handler(CommandHandler("beer", beer))
     dp.add_handler(CommandHandler("joke", joke))
     dp.add_handler(CommandHandler("donate", donate))
     dp.add_error_handler(error)
