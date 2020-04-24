@@ -9,7 +9,6 @@ A bot for [www.keithfem.com](https://www.keithfem.com/) that displays the schedu
 * `/week`: displays the shows for the week.
 * `/gibberish`: some gibberish.
 * `/about`: the usual stuff that an about command displays.
-* `/beer`: do you want some beer uh?
 * `/joke`: KeithF'em BotMeister, tell me a joke
 * `/donate`: donate to Keith F'em.
 * `/help`: help about the commands.
