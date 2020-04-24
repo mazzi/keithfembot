@@ -191,7 +191,7 @@ def main():
     dp.add_handler(CommandHandler("today", today))
     dp.add_handler(CommandHandler("tomorrow", tomorrow))
     dp.add_handler(CommandHandler("week", week))
-    dp.add_handler(CommandHandler("togo", week))
+    dp.add_handler(CommandHandler("togo", togo))
     dp.add_handler(CommandHandler("gibberish", gibberish))
     dp.add_handler(CommandHandler("help", help))
     dp.add_handler(CommandHandler("joke", joke))
