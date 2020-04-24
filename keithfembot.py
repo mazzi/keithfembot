@@ -170,6 +170,7 @@ def help(update, context):
         "`/today`: displays the schedule for today.\n"
         "`/tomorrow`: displays the schedule for tomorrow.\n"
         "`/week`: displays the shows for the week.\n"
+        "`/togo`: info to order drinks.\n"
         "`/gibberish`: some gibberish.\n"
         "`/joke`: KeithF'em BotMeister, tell me a joke.\n"
         "`/donate`: donate to Keith F'em.\n"
