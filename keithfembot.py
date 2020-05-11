@@ -148,7 +148,11 @@ def joke(update, context):
 
 def donate(update, context):
     """" Displays donate link """
-    send(update, context, "[https://paypal.me/keithfem]")
+    send(
+        update,
+        context,
+        "[https://www.kickstarter.com/projects/keith-fem/keith-fem-studio-build]",
+    )
 
 
 def togo(update, context):
