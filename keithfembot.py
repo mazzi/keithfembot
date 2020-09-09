@@ -40,7 +40,8 @@ def error(update, context):
 
 
 def parse_show(show):
-    name = show["name"]
+    # Just a patch for live shows naming convention
+    name = show["name"].replace("*", "\\*")
     starts = show["starts"][-8:-3]
     ends = show["ends"][-8:-3]
     return (
