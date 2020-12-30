@@ -22,15 +22,49 @@ def test_about():
 
 
 def test_donate():
-    pass
+
+    msg = "[https://www.paypal.me/keithfem]"
+
+    with patch.object(KeithFemBotCommands, "_send", return_value=None) as mock_send:
+        KFBC = KeithFemBotCommands()
+        KFBC.donate(update=None, context=None)
+        mock_send.assert_called_once_with(None, None, msg)
 
 
 def test_togo():
-    pass
+
+    msg = (
+        "Keith Togo 🇹🇬\n"
+        "Thursday - Sunday 15-20h\n"
+        "Check https://t.me/keithtogo for more details\n"
+    )
+
+    with patch.object(KeithFemBotCommands, "_send", return_value=None) as mock_send:
+        KFBC = KeithFemBotCommands()
+        KFBC.togo(update=None, context=None)
+        mock_send.assert_called_once_with(None, None, msg)
 
 
 def test_help():
-    pass
+
+    msg = (
+        "`/about`: the old and boring about command.\n"
+        "`/now`: show what is on the air at the moment.\n"
+        "`/next`: displays the upcoming show.\n"
+        "`/today`: displays the schedule for today.\n`"
+        "/tomorrow`: displays the schedule for tomorrow.\n"
+        "`/week`: displays the shows for the week.\n`"
+        "/togo`: info to order drinks.\n`"
+        "/gibberish`: some gibberish.\n`"
+        "/joke`: KeithF'em BotMeister, tell me a joke.\n"
+        "`/donate`: donate to Keith F'em.\n"
+        "`/help`: this help.\n"
+    )
+
+    with patch.object(KeithFemBotCommands, "_send", return_value=None) as mock_send:
+        KFBC = KeithFemBotCommands()
+        KFBC.help(update=None, context=None)
+        mock_send.assert_called_once_with(None, None, msg)
 
 
 """ Methods with external dependencies """
