@@ -32,10 +32,6 @@ FORTUNE_URL is a fortunes service.
 
 DADJOKE_URL is a jokes service.
 
-## Deployment
-
-With Heroku. Check the Procfile and requirements.txt. Use [virtualenv](https://virtualenv.pypa.io/en/stable/)
 
 <sub><sup>Keith F'em, a community radio experiment, is presented by Keith in conjuction with SP2. hello@keithfem.com</sup></sub>
 
-<sub><sup>Author: lmazzitelli@pm.me - Coded in Barcelona during the COVID-19 outbreak.</sup></sub>
