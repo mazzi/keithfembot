@@ -17,13 +17,12 @@ A bot for [www.keithfem.com](https://www.keithfem.com/) that displays the schedu
 Create a .envrc with these environment variables. Use [direnv](https://direnv.net/).
 
 ```
+export PYTHONPATH=./src/
 export KEITHFEM_BASE_URL=
 export HTTP_API_TOKEN=
 export FORTUNE_URL=https://anothervps.com/api/fortune/
 export DADJOKE_URL=https://icanhazdadjoke.com/
 ```
-
-PYTHONPATH=./src/
 
 KEITHFEM_BASE_URL is the [airtime](https://www.airtime.pro/) base url of the radio.
 
