@@ -23,7 +23,7 @@ lockfile==0.12.2
 more-itertools==8.2.0
 msgpack==1.0.0
 packaging==20.3
-pastel==0.2.0
+pastel==0.2.1
 pendulum==2.1.0
 pexpect==4.8.0
 pkginfo==1.5.0.1
