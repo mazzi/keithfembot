@@ -28,7 +28,7 @@ pendulum==2.1.0
 pexpect==4.8.0
 pkginfo==1.5.0.1
 pluggy==0.13.1
-poetry==1.0.5
+poetry==1.1.4
 ptyprocess==0.6.0
 py==1.10.0
 pyaes==1.6.1
