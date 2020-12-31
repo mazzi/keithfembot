@@ -43,7 +43,7 @@ python-telegram-bot==13.1
 pytz==2020.5
 pytzdata==2019.3
 requests==2.25.1
-requests-toolbelt==0.8.0
+requests-toolbelt==0.9.1
 rsa==4.6
 shellingham==1.3.2
 six==1.15.0
