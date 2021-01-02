@@ -144,7 +144,9 @@ class KeithFemBotCommands:
     def donate(self, update, context):
         """" Displays donate link """
         self._send(
-            update, context, "[https://www.paypal.me/keithfem]",
+            update,
+            context,
+            "[https://www.paypal.me/keithfem]",
         )
 
     def togo(self, update, context):
