@@ -113,5 +113,4 @@ jobs:
             ${{ github.workspace }}/requirements.txt
       - name: Run tests
         run: |
-          poetry run pytest -v --cov-config=.coveragerc --cov-report=xml --cov=src
-          poetry run coveralls
+          poetry run pytest -v
