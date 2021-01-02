@@ -5,9 +5,10 @@ import logging
 from http import HTTPStatus
 
 import requests
-from config import DADJOKE_URL, FORTUNE_URL, HTTP_API_TOKEN, KEITHFEM_BASE_URL
 from telegram import ParseMode
 from telegram.ext import CommandHandler, Updater
+
+from config import DADJOKE_URL, FORTUNE_URL, HTTP_API_TOKEN, KEITHFEM_BASE_URL
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -143,7 +144,9 @@ class KeithFemBotCommands:
     def donate(self, update, context):
         """" Displays donate link """
         self._send(
-            update, context, "[https://www.paypal.me/keithfem]",
+            update,
+            context,
+            "[https://www.paypal.me/keithfem]",
         )
 
     def togo(self, update, context):

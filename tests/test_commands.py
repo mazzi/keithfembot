@@ -1,6 +1,7 @@
 from unittest.mock import patch
 
 from freezegun import freeze_time
+
 from keithfembot import KeithFemBotCommands
 
 """ Methods without external dependencies """
