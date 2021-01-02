@@ -330,14 +330,6 @@ python-versions = "*"
 pytz = "*"
 
 [[package]]
-name = "unittest"
-version = "0.0"
-description = ""
-category = "dev"
-optional = false
-python-versions = "*"
-
-[[package]]
 name = "urllib3"
 version = "1.26.2"
 description = "HTTP library with thread-safe connection pooling, file post, and more."

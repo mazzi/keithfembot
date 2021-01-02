@@ -12,7 +12,6 @@ python-telegram-bot = "^13.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.1"
-unittest = "^0.0"
 freezegun = "^1.0.0"
 coveralls = "^2.2.0"
 
