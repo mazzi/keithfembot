@@ -1,0 +1,20 @@
+[tool.poetry]
+name = "keithfem_bot"
+version = "0.1.0"
+description = "A bot for www.keithfem.com telegram group chat that displays the schedule of the radio shows."
+authors = ["Lautaro Mazzitelli <lmazzitelli@gmail.com>"]
+license = "Attribution-NonCommercial-ShareAlike. CC BY-NC-SA"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.25.1"
+python-telegram-bot = "^13.1"
+
+[tool.poetry.dev-dependencies]
+pytest = "^6.2.1"
+unittest = "^0.0"
+freezegun = "^1.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
