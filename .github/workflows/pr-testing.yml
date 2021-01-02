@@ -41,6 +41,10 @@ jobs:
           python3 -m venv .venv
           poetry install
           poetry export --without-hashes -f requirements.txt > src/requirements.txt
+      - name: Export requirements.txt
+        if: steps.valid-cache.outputs.cache-hit != 'true'
+        run: |
+          poetry export --without-hashes -f requirements.txt > requirements.txt
 
   linters:
       name: Linting
