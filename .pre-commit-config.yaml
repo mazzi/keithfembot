@@ -1,10 +1,8 @@
 repos:
--   repo: git://github.com/adambrenecki/pre-commit-python-sorter
-    rev: 1.0.5
+-   repo: https://github.com/timothycrosley/isort
+    rev: 5.5.1
     hooks:
-    -   id: python-import-sorter
-        args:
-        - --silent-overwrite
+    -   id: isort
 -   repo: https://github.com/ambv/black
     rev: 19.10b0
     hooks:
