@@ -1,5 +1,5 @@
 # Keithfem Bot
-A bot for [www.keithfem.com](https://www.keithfem.com/) that displays the schedule of the radio shows.
+A Telegram bot for [www.keithfem.com](https://www.keithfem.com/) that displays the radio shows schedule.
 
 ## Commands
 * `/now` : displays the show that is on air at the moment.
