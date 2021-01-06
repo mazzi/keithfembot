@@ -20,7 +20,7 @@ class KeithFemBotCommands:
     def _send(self, update, context, msg):
         context.bot.send_message(
             chat_id=update.effective_chat.id,
-            text=html.unescape(msg),
+            text=msg,
             parse_mode=ParseMode.MARKDOWN,
         )
 
@@ -39,18 +39,14 @@ class KeithFemBotCommands:
         logger.warning('Update "%s" caused error "%s"', update, context.error)
 
     def _parse_show(self, show):
-        """Parses show parameters and scapes special characters. """
+        """Parses show name, start and end. """
         name = show["name"]
-        SPECIAL_MARKDONW_CHARS = "\\`*_{}[]()#+-.!"
-        for char in SPECIAL_MARKDONW_CHARS:
-            if char in name:
-                name = name.replace(char, "\\" + char)
         starts = show["starts"][-8:-3]
         ends = show["ends"][-8:-3]
         return (
             starts,
             ends,
-            name,
+            html.unescape(name),
         )
 
     def _show(self, update, context, when):
