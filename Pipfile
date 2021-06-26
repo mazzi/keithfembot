@@ -6,7 +6,7 @@ verify_ssl = true
 [dev-packages]
 
 [packages]
-certifi = "==2020.12.5"
+certifi = "==2021.5.30"
 cffi = "==1.14.5"
 chardet = "==4.0.0"
 cryptography = "==3.4.7"
