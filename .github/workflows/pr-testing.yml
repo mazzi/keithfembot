@@ -90,6 +90,8 @@ jobs:
     env:
       PYTHONPATH: src/
       SHA: ${{ github.sha }}
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
+
 
     steps:
       - name: Clone repository
@@ -114,3 +116,4 @@ jobs:
       - name: Run tests
         run: |
           poetry run pytest -v
+          poetry run coveralls

@@ -1,6 +1,8 @@
 # Keithfem Bot
 A Telegram bot for [www.keithfem.com](https://www.keithfem.com/) that displays the radio shows schedule.
 
+[![Coverage Status](https://coveralls.io/repos/github/mazzi/keithfembot/badge.svg?branch=main)](https://coveralls.io/github/mazzi/keithfembot?branch=main)
+
 ## Commands
 * `/now` : displays the show that is on air at the moment.
 * `/next` : displays the upcoming show.
@@ -34,4 +36,3 @@ DADJOKE_URL is a jokes service.
 
 
 <sub><sup>Keith F'em, a community radio experiment, is presented by Keith in conjuction with SP2. hello@keithfem.com</sup></sub>
-
