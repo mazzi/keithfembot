@@ -132,14 +132,14 @@ toml = ["toml"]
 
 [[package]]
 name = "coveralls"
-version = "3.0.0"
+version = "3.3.0"
 description = "Show coverage stats online via coveralls.io"
 category = "dev"
 optional = false
 python-versions = ">= 3.5"
 
 [package.dependencies]
-coverage = ">=4.1,<6.0"
+coverage = ">=4.1,<7.0"
 docopt = ">=0.6.1"
 requests = ">=1.0.0"
 
@@ -490,7 +490,7 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "42840372f64fc7463801db01d493a6b854054a06b97f78621c1df9dbd4703dc8"
+content-hash = "011919b16dfc1813ae4d355738ed461d521c4c4a5b3d6d80e13d2c0f109c92b9"
 
 [metadata.files]
 appdirs = [
@@ -550,6 +550,7 @@ cffi = [
     {file = "cffi-1.14.4-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:840793c68105fe031f34d6a086eaea153a0cd5c491cde82a74b420edd0a2b909"},
     {file = "cffi-1.14.4-cp39-cp39-manylinux1_i686.whl", hash = "sha256:b18e0a9ef57d2b41f5c68beefa32317d286c3d6ac0484efd10d6e07491bb95dd"},
     {file = "cffi-1.14.4-cp39-cp39-manylinux1_x86_64.whl", hash = "sha256:045d792900a75e8b1e1b0ab6787dd733a8190ffcf80e8c8ceb2fb10a29ff238a"},
+    {file = "cffi-1.14.4-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:7ef7d4ced6b325e92eb4d3502946c78c5367bc416398d387b39591532536734e"},
     {file = "cffi-1.14.4-cp39-cp39-win32.whl", hash = "sha256:ba4e9e0ae13fc41c6b23299545e5ef73055213e466bd107953e4a013a5ddd7e3"},
     {file = "cffi-1.14.4-cp39-cp39-win_amd64.whl", hash = "sha256:f032b34669220030f905152045dfa27741ce1a6db3324a5bc0b96b6c7420c87b"},
     {file = "cffi-1.14.4.tar.gz", hash = "sha256:1a465cbe98a7fd391d47dce4b8f7e5b921e6cd805ef421d04f5f66ba8f06086c"},
@@ -618,8 +619,8 @@ coverage = [
     {file = "coverage-5.3.1.tar.gz", hash = "sha256:38f16b1317b8dd82df67ed5daa5f5e7c959e46579840d77a67a4ceb9cef0a50b"},
 ]
 coveralls = [
-    {file = "coveralls-3.0.0-py2.py3-none-any.whl", hash = "sha256:f8384968c57dee4b7133ae701ecdad88e85e30597d496dcba0d7fbb470dca41f"},
-    {file = "coveralls-3.0.0.tar.gz", hash = "sha256:5399c0565ab822a70a477f7031f6c88a9dd196b3de2877b3facb43b51bd13434"},
+    {file = "coveralls-3.3.0-py2.py3-none-any.whl", hash = "sha256:f3c2142c9117c6dd04bc721cc733e59cdb9fd516924c551f98a458d16f8facf0"},
+    {file = "coveralls-3.3.0.tar.gz", hash = "sha256:4508b8f18344b421a736a276b813daddfdbbe45928c3f878fa72bf54442ea641"},
 ]
 cryptography = [
     {file = "cryptography-3.3.1-cp27-cp27m-macosx_10_10_x86_64.whl", hash = "sha256:c366df0401d1ec4e548bebe8f91d55ebcc0ec3137900d214dd7aac8427ef3030"},
