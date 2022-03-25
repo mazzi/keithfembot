@@ -25,7 +25,7 @@ class KeithFemBotCommands:
         )
 
     def about(self, update, context):
-        """ About """
+        """About"""
         msg = (
             "Keith F'em, a community radio experiment, is presented by Keith "
             "in conjuction with SP2. `hello@keithfem.com`\n"
@@ -35,11 +35,11 @@ class KeithFemBotCommands:
         self._send(update, context, msg)
 
     def error(self, update, context):
-        """ Log Errors """
+        """Log Errors"""
         logger.warning('Update "%s" caused error "%s"', update, context.error)
 
     def _parse_show(self, show):
-        """Parses show name, start and end. """
+        """Parses show name, start and end."""
         name = show["name"]
         starts = show["starts"][-8:-3]
         ends = show["ends"][-8:-3]
@@ -50,7 +50,7 @@ class KeithFemBotCommands:
         )
 
     def _show(self, update, context, when):
-        """ Displays the show that is on air at the moment. """
+        """Displays the show that is on air at the moment."""
         response = requests.get(KEITHFEM_BASE_URL + "live-info")
         if response.status_code == HTTPStatus.OK:
             response = response.json()
@@ -62,15 +62,15 @@ class KeithFemBotCommands:
             self._send(update, context, "We cannot tell you at the moment.")
 
     def now(self, update, context):
-        """ Displays the show that is in the air now. """
+        """Displays the show that is in the air now."""
         self._show(update, context, "currentShow")
 
     def next(self, update, context):
-        """ Displays the upcoming show. """
+        """Displays the upcoming show."""
         self._show(update, context, "nextShow")
 
     def day(self, update, context, on_day):
-        """ Displays the schedule for the weekday on_day. """
+        """Displays the schedule for the weekday on_day."""
         response = requests.get(KEITHFEM_BASE_URL + "week-info")
         if response.status_code == HTTPStatus.OK:
             response = response.json()
@@ -90,15 +90,15 @@ class KeithFemBotCommands:
         self.day(update, context, on_day)
 
     def today(self, update, context):
-        """ Displays the schedule for today. """
+        """Displays the schedule for today."""
         self._schedule_day(update, context, timedelta=0)
 
     def tomorrow(self, update, context):
-        """ Displays the schedule for tomorrow. """
+        """Displays the schedule for tomorrow."""
         self._schedule_day(update, context, timedelta=1)
 
     def week(self, update, context):
-        """ Displays the schedule for the week. """
+        """Displays the schedule for the week."""
         days_of_the_week = []
         for day in range(0, 7):
             days_of_the_week.append(calendar.day_name[day].lower())
@@ -118,7 +118,7 @@ class KeithFemBotCommands:
             self._send(update, context, "We cannot tell you at the moment.")
 
     def gibberish(self, update, context):
-        """ Displays a fortune. """
+        """Displays a fortune."""
         response = requests.get(FORTUNE_URL)
         if response.status_code == HTTPStatus.OK:
             self._send(update, context, response.json())
@@ -126,7 +126,7 @@ class KeithFemBotCommands:
             self._send(update, context, "Nothing to say about that.")
 
     def joke(self, update, context):
-        """ Tells a dad joke. """
+        """Tells a dad joke."""
         headers = {
             "User-Agent": "Keith F'em Bot (https://github.com/mazzi/keithfembot)",
             "Accept": "text/plain",
@@ -138,7 +138,7 @@ class KeithFemBotCommands:
             self._send(update, context, "Nothing to say about that.")
 
     def donate(self, update, context):
-        """" Displays donate link """
+        """Displays donate link"""
         self._send(
             update,
             context,
@@ -146,7 +146,7 @@ class KeithFemBotCommands:
         )
 
     def togo(self, update, context):
-        """" Displays Keith togo link """
+        """Displays Keith togo link"""
         togo_text = (
             "Keith Togo 🇹🇬\n"
             "Thursday - Sunday 15-20h\n"
@@ -155,7 +155,7 @@ class KeithFemBotCommands:
         self._send(update, context, togo_text)
 
     def help(self, update, context):
-        """ Help usage. """
+        """Help usage."""
         help_text = (
             "`/about`: the old and boring about command.\n"
             "`/now`: show what is on the air at the moment.\n"
@@ -173,7 +173,7 @@ class KeithFemBotCommands:
 
 
 def main():
-    """ Starts the bot. """
+    """Starts the bot."""
     updater = Updater(token=HTTP_API_TOKEN, use_context=True)
 
     dp = updater.dispatcher
