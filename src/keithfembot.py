@@ -138,7 +138,7 @@ class KeithFemBotCommands:
             self._send(update, context, "Nothing to say about that.")
 
     def donate(self, update, context):
-        """"Displays donate link"""
+        """Displays donate link"""
         self._send(
             update,
             context,
@@ -146,7 +146,7 @@ class KeithFemBotCommands:
         )
 
     def togo(self, update, context):
-        """"Displays Keith togo link"""
+        """Displays Keith togo link"""
         togo_text = (
             "Keith Togo 🇹🇬\n"
             "Thursday - Sunday 15-20h\n"
