@@ -20,7 +20,7 @@ python-telegram-bot = "==13.11"
 requests = "==2.27.1"
 six = "==1.16.0"
 tornado = "==6.1"
-urllib3 = "==1.26.9"
+urllib3 = "==1.26.11"
 
 [requires]
 python_version = "3.8"
