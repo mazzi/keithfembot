@@ -117,4 +117,4 @@ jobs:
       - name: Run tests
         run: |
           poetry run pytest -v --cov-report=xml --cov=src
-          poetry run coveralls
+          poetry run coveralls --service=github 
