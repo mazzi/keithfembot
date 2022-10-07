@@ -115,6 +115,8 @@ jobs:
             ${{ github.workspace }}/.venv
             ${{ github.workspace }}/requirements.txt
       - name: Run tests
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           poetry run pytest -v --cov-report=xml --cov=src
           poetry run coveralls --service=github 
