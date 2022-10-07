@@ -6,7 +6,7 @@ authors = ["Lautaro Mazzitelli <lmazzitelli@gmail.com>"]
 license = "Attribution-NonCommercial-ShareAlike. CC BY-NC-SA"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.10"
 requests = "^2.25.1"
 python-telegram-bot = "^13.1"
 pytest-cov = "^3.0.0"
