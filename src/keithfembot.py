@@ -145,15 +145,6 @@ class KeithFemBotCommands:
             "[https://www.paypal.me/keithfem]",
         )
 
-    def togo(self, update, context):
-        """Displays Keith togo link"""
-        togo_text = (
-            "Keith Togo 🇹🇬\n"
-            "Thursday - Sunday 15-20h\n"
-            "Check https://t.me/keithtogo for more details\n"
-        )
-        self._send(update, context, togo_text)
-
     def help(self, update, context):
         """Help usage."""
         help_text = (
@@ -163,7 +154,6 @@ class KeithFemBotCommands:
             "`/today`: displays the schedule for today.\n"
             "`/tomorrow`: displays the schedule for tomorrow.\n"
             "`/week`: displays the shows for the week.\n"
-            "`/togo`: info to order drinks.\n"
             "`/gibberish`: some gibberish.\n"
             "`/joke`: KeithF'em BotMeister, tell me a joke.\n"
             "`/donate`: donate to Keith F'em.\n"
