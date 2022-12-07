@@ -176,7 +176,6 @@ def main():
     dp.add_handler(CommandHandler("today", KFBC.today))
     dp.add_handler(CommandHandler("tomorrow", KFBC.tomorrow))
     dp.add_handler(CommandHandler("week", KFBC.week))
-    dp.add_handler(CommandHandler("togo", KFBC.togo))
     dp.add_handler(CommandHandler("gibberish", KFBC.gibberish))
     dp.add_handler(CommandHandler("help", KFBC.help))
     dp.add_handler(CommandHandler("joke", KFBC.joke))
