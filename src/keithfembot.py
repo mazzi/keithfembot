@@ -145,15 +145,6 @@ class KeithFemBotCommands:
             "[https://www.paypal.me/keithfem]",
         )
 
-    def togo(self, update, context):
-        """Displays Keith togo link"""
-        togo_text = (
-            "Keith Togo 🇹🇬\n"
-            "Thursday - Sunday 15-20h\n"
-            "Check https://t.me/keithtogo for more details\n"
-        )
-        self._send(update, context, togo_text)
-
     def help(self, update, context):
         """Help usage."""
         help_text = (
@@ -186,7 +177,6 @@ def main():
     dp.add_handler(CommandHandler("today", KFBC.today))
     dp.add_handler(CommandHandler("tomorrow", KFBC.tomorrow))
     dp.add_handler(CommandHandler("week", KFBC.week))
-    dp.add_handler(CommandHandler("togo", KFBC.togo))
     dp.add_handler(CommandHandler("gibberish", KFBC.gibberish))
     dp.add_handler(CommandHandler("help", KFBC.help))
     dp.add_handler(CommandHandler("joke", KFBC.joke))

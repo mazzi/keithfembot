@@ -32,20 +32,6 @@ def test_donate():
         mock_send.assert_called_once_with(None, None, msg)
 
 
-def test_togo():
-
-    msg = (
-        "Keith Togo 🇹🇬\n"
-        "Thursday - Sunday 15-20h\n"
-        "Check https://t.me/keithtogo for more details\n"
-    )
-
-    with patch.object(KeithFemBotCommands, "_send", return_value=None) as mock_send:
-        KFBC = KeithFemBotCommands()
-        KFBC.togo(update=None, context=None)
-        mock_send.assert_called_once_with(None, None, msg)
-
-
 def test_help():
 
     msg = (
