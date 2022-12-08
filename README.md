@@ -1,6 +1,8 @@
 # Keithfem Bot
 A Telegram bot for [www.keithfem.com](https://www.keithfem.com/) that displays the radio shows schedule.
 
+![KeithfemBotMeister](https://user-images.githubusercontent.com/121728/206558417-2ce25cec-53f7-480a-82a7-8637dc77f555.jpeg)
+
 [![Coverage Status](https://coveralls.io/repos/github/mazzi/keithfembot/badge.svg?branch=main)](https://coveralls.io/github/mazzi/keithfembot?branch=main)
 
 ## Commands
@@ -35,4 +37,4 @@ FORTUNE_URL is a fortunes service.
 DADJOKE_URL is a jokes service.
 
 
-<sub><sup>Keith F'em, a community radio experiment, is presented by Keith in conjuction with SP2. hello@keithfem.com</sup></sub>
+<sub><sup>Keith F'em, a community radio experiment, is presented by Keith in conjunction with SP2. hello@keithfem.com</sup></sub>
