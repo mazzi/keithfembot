@@ -1,13 +1,11 @@
+[![Coverage Status](https://coveralls.io/repos/github/mazzi/keithfembot/badge.svg?branch=main)](https://coveralls.io/github/mazzi/keithfembot?branch=main)
+
 # Keithfem Bot
 A Telegram bot for [www.keithfem.com](https://www.keithfem.com/) that displays the radio shows schedule.
 
-<table><tr><td>
-<img src="https://user-images.githubusercontent.com/121728/206558840-153a34ee-4707-4c38-88c9-89e2d22c6132.jpg" width="450" alt="KeithFem Logo" />
-</td><td>
+<div style="text-align: center;">
 <img src="https://user-images.githubusercontent.com/121728/206558417-2ce25cec-53f7-480a-82a7-8637dc77f555.jpeg" width="450" alt="KeithfemBotMeister Logo" />
-</td></tr></table>
-
-[![Coverage Status](https://coveralls.io/repos/github/mazzi/keithfembot/badge.svg?branch=main)](https://coveralls.io/github/mazzi/keithfembot?branch=main)
+</div>
 
 ## Commands
 * `/now` : displays the show that is on air at the moment.
