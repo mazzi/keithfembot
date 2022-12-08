@@ -3,9 +3,7 @@
 # Keithfem Bot
 A Telegram bot for [www.keithfem.com](https://www.keithfem.com/) that displays the radio shows schedule.
 
-<div style="text-align: center;">
-<img src="https://user-images.githubusercontent.com/121728/206558417-2ce25cec-53f7-480a-82a7-8637dc77f555.jpeg" width="450" alt="KeithfemBotMeister Logo" />
-</div>
+<img src="https://user-images.githubusercontent.com/121728/206558417-2ce25cec-53f7-480a-82a7-8637dc77f555.jpeg" width="225" alt="KeithfemBotMeister Logo" />
 
 ## Commands
 * `/now` : displays the show that is on air at the moment.
