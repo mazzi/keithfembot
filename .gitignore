@@ -1,4 +1,5 @@
 *.pyc
+.vscode
 
 .envrc
 */__pycache__/
