@@ -1,2 +1,4 @@
+*.pyc
+
 .envrc
 */__pycache__/
