@@ -1,11 +1,60 @@
-from unittest.mock import Mock
+from unittest.mock import MagicMock
+from urllib import request
 
 import pytest
 from requests.models import Response
 
+from clients.http import HTTPClient
+
 
 @pytest.fixture
+def http_client():
+    """Returns an HTTP Client."""
+    yield HTTPClient(http_client=request)
+
+
+@pytest.fixture
+def joke():
+    """A joke from the joke service."""
+    return "what do you call a dog that can do magic tricks?" " a labracadabrador"
+
+
+@pytest.fixture
+def donate():
+    """Donate link from keithfem.com"""
+    return "[https://www.paypal.me/keithfem]"
+
+
+@pytest.fixture
+def about():
+    """Returns the about string."""
+    return (
+        "Keith F'em, a community radio experiment, is presented by Keith "
+        "in conjunction with SP2. `hello@keithfem.com`\n"
+        "Bot created in Barcelona during the COVID-19 outbreak quarantine "
+        "(March 2020) ✌️"
+    )
+
+
+@pytest.fixture
+def help():
+    """Returns the help with all the commands."""
+    return (
+        "`/about`: the old and boring about command.\n"
+        "`/now`: show what is on the air at the moment.\n"
+        "`/next`: displays the upcoming show.\n"
+        "`/today`: displays the schedule for today.\n"
+        "`/tomorrow`: displays the schedule for tomorrow.\n"
+        "`/week`: displays the shows for the week.\n"
+        "`/joke`: KeithF'em BotMeister, tell me a joke.\n"
+        "`/donate`: donate to Keith F'em.\n"
+        "`/help`: this help.\n"
+    )
+
+
+@pytest.fixture()
 def show():
+    """Returns a dict with a show."""
     return {
         "start_timestamp": "2020-12-27 00:00:00",
         "end_timestamp": "2020-12-27 02:00:00",
@@ -25,7 +74,8 @@ def show():
 
 @pytest.fixture
 def response_live_info():
-    response = Mock(spec=Response)
+    """Returns a response with full live info. Pretty long."""
+    response = MagicMock(spec=Response)
     response.status_code = 200
     response.json.return_value = {
         "env": "production",
@@ -312,7 +362,8 @@ def response_live_info():
 
 @pytest.fixture
 def response_week_info():
-    response = Mock(spec=Response)
+    """Returns a week info response. Pretty long."""
+    response = MagicMock(spec=Response)
     response.status_code = 200
     response.json.return_value = {
         "monday": [
