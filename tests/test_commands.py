@@ -20,6 +20,13 @@ from commands import (
 from exceptions import HTTPError
 
 
+class TestCommand:
+
+    def test_command_call_not_implemented(self):
+        with pytest.raises(NotImplementedError):
+            Command()(update=None, context=None)
+
+
 class TestCommandsWithoutDependencies:
     """Methods without external dependencies"""
 
