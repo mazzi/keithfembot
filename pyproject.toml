@@ -16,7 +16,6 @@ distribute = "^0.7.3"
 pip = "^22.3.1"
 pipenv = "^2022.11.30"
 pytest = "^7.2.0"
-mypy = "^0.991"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.2.0"
