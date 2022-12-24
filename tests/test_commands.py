@@ -20,6 +20,12 @@ from commands import (
 from exceptions import HTTPError
 
 
+class TestCommand:
+    def test_command_call_not_implemented(self):
+        with pytest.raises(NotImplementedError):
+            Command()(update=None, context=None)
+
+
 class TestCommandsWithoutDependencies:
     """Methods without external dependencies"""
 
@@ -137,6 +143,32 @@ class TestCommandsWithDependencies:
             "(18:00 - 20:00) - *Kraut Kontrol*\n"
             "(20:00 - 23:00) - *The Broth*\n"
             "(23:00 - 01:00) - *The Boring Music Show*\n"
+        )
+        with patch.object(Command, "send", return_value=None) as mock_send:
+            with patch("requests.get") as patched_get:
+                patched_get.return_value = response_week_info
+                msg = Tomorrow(http_client=requests)(update=None, context=None)
+
+                patched_get.assert_called_once()
+                mock_send.assert_called_once_with(None, None, msg)
+
+        assert msg == expected
+
+    @freeze_time("2020-12-27")  # Sunday
+    def test_tomorrow_when_sunday(self, response_week_info):
+        expected = (
+            "Shows for Monday _🇩🇪 time!_\n"
+            "(00:00 - 08:00) - *Keith F'em Bot DJ*\n"
+            "(08:00 - 09:00) - *Keith F'em Bot DJ*\n"
+            "(09:00 - 11:00) - *Caprisonne Revisited*\n"
+            "(11:00 - 13:00) - *Keith F'em Bot DJ*\n"
+            "(13:00 - 14:00) - *The Keith Family ExperimentalHour*\n"
+            "(14:00 - 16:00) - *Keith F'em Bot DJ*\n"
+            "(16:00 - 18:00) - *Liv and Ken play Heavy Rock for Moms*\n"
+            "(18:00 - 20:00) - *Still Hating*\n"
+            "(20:00 - 21:00) - *wood, metal, stoned*\n"
+            "(21:00 - 22:00) - *Ängstkiste*\n"
+            "(22:00 - 00:00) - *Novo line*\n"
         )
         with patch.object(Command, "send", return_value=None) as mock_send:
             with patch("requests.get") as patched_get:
