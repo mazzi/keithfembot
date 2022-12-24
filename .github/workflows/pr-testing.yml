@@ -72,7 +72,7 @@ jobs:
               ${{ github.workspace }}/requirements.txt
         - name: Run Isort
           run: |
-            poetry run isort --check src tests
+            poetry run isort --profile "black" --check src tests
         - name: Run Flake8
           run: |
             poetry run flake8 src tests
