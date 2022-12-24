@@ -43,22 +43,24 @@ class About(Command):
 
 
 class Donate(Command):
+    """Displays link to donate to Keith F'em"""
+
     def __init__(self):
         super().__init__()
 
     def __call__(self, update, context) -> str:
-        """Displays link to donate to Keith F'em"""
         msg = "[https://www.paypal.me/keithfem]"
         self.send(update, context, msg)
         return msg
 
 
 class Help(Command):
+    """Help usage."""
+
     def __init__(self):
         super().__init__()
 
     def __call__(self, update, context) -> str:
-        """Help usage."""
         msg = (
             "`/about`: the old and boring about command.\n"
             "`/now`: show what is on the air at the moment.\n"
