@@ -4,24 +4,33 @@ from helpers import ParseHelper
 
 
 class TestHelpers:
-
-    @pytest.mark.parametrize("tuple, expected", [
-        (("01:00", "04:00", "Nocturnal Emissions"),
-         "*Nocturnal Emissions* (01:00 - 04:00 _🇩🇪 time!_)"),
-    ])
+    @pytest.mark.parametrize(
+        "tuple, expected",
+        [
+            (
+                ("01:00", "04:00", "Nocturnal Emissions"),
+                "*Nocturnal Emissions* (01:00 - 04:00 _🇩🇪 time!_)",
+            ),
+        ],
+    )
     def test_format_show(self, tuple, expected) -> None:
         helper = ParseHelper()
         result = helper.format_show(tuple)
         assert result == expected
 
-    @pytest.mark.parametrize("dictionary, expected", [
-        ({
-            "name": "Nocturnal Emissions",
-            "starts": "2020-12-23 01:00:00",
-            "ends": "2020-12-23 04:00:00",
-         },
-         ("01:00", "04:00", "Nocturnal Emissions")),
-    ])  # TODO: More cases with the dict: missing keys; wrong info.
+    @pytest.mark.parametrize(
+        "dictionary, expected",
+        [
+            (
+                {
+                    "name": "Nocturnal Emissions",
+                    "starts": "2020-12-23 01:00:00",
+                    "ends": "2020-12-23 04:00:00",
+                },
+                ("01:00", "04:00", "Nocturnal Emissions"),
+            ),
+        ],
+    )  # TODO: More cases with the dict: missing keys; wrong info.
     def test_parse_show(self, dictionary, expected) -> None:
         helper = ParseHelper()
         result = helper.parse_show(dictionary)

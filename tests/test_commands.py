@@ -5,8 +5,18 @@ import requests
 from freezegun import freeze_time
 
 from clients.fakes.http import FakeHTTPClient
-from commands import (About, Command, Donate, Help, Joke, Next, Now, Today,
-                      Tomorrow, Week)
+from commands import (
+    About,
+    Command,
+    Donate,
+    Help,
+    Joke,
+    Next,
+    Now,
+    Today,
+    Tomorrow,
+    Week,
+)
 from exceptions import HTTPError
 
 
