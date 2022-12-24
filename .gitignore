@@ -1,5 +1,6 @@
 *.pyc
 .vscode
+.converage
 
 .envrc
 */__pycache__/
