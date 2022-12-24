@@ -35,12 +35,29 @@ class ParseHelper:
         )
 
     def parse_shows_for_day(self, response, day) -> str:
+        """From a response, it returns a string with the shows of the day
+
+        Args:
+            response (dict): A dict with the shows for the week.
+            day (str): day of the week to be parsed
+
+        Returns:
+            str: A string with all the shows for the day
+        """
         shows_msg = ""
         for show in response[day.lower()]:
             shows_msg += "(%s - %s) - *%s*\n" % self.parse_show(show)
         return shows_msg
 
     def parse_shows_for_week(self, response) -> str:
+        """From a response, it returns the shows for the week
+
+        Args:
+            response (dict): A dict with the shows for the week.
+
+        Returns:
+            str: A string with all the shows for the week
+        """
         msg = ""
         days_of_the_week = []
         for day in range(0, 7):
