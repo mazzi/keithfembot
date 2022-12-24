@@ -181,7 +181,6 @@ class TestCommandsWithDependencies:
 
         assert msg == expected
 
-
     @freeze_time("2020-12-29")  # Wednesday
     def test_week(self, response_week_info):
         expected = (
