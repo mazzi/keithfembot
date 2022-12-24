@@ -7,7 +7,7 @@ class ParseHelper:
         """Formats a show info to be ready to be send
 
         Args:
-            show (tuple): ("2022-12-13 01:00:00", "2022-12-13 04:00:00", name)
+            show (tuple): ("01:00", "04:00", "name")
 
         Returns:
             str: a show name in bold, and start and end time. Example:

@@ -4,3 +4,7 @@ class KeithFemException(Exception):
 
 class HTTPError(KeithFemException):
     """Error happening when querying an external service"""
+
+
+class AirtimeParsingException(Exception):
+    """Error happening when parsing info from Airtime"""

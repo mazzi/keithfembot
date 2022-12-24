@@ -14,7 +14,7 @@ class HTTPClient:
         try:
             response = self.http_client.get(url, headers)
             response.raise_for_status()
-        except self.http_client.HTTPError as exec:
+        except Exception as exec:
             raise HTTPError(str(exec)) from exec
 
         return response.text
