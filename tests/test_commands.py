@@ -158,17 +158,11 @@ class TestCommandsWithDependencies:
     def test_tomorrow_when_sunday(self, response_week_info):
         expected = (
             "Shows for Monday _🇩🇪 time!_\n"
-            "(00:00 - 08:00) - *Keith F'em Bot DJ*\n"
-            "(08:00 - 09:00) - *Keith F'em Bot DJ*\n"
-            "(09:00 - 11:00) - *Caprisonne Revisited*\n"
-            "(11:00 - 13:00) - *Keith F'em Bot DJ*\n"
+            "(02:00 - 04:00) - *The Cunning Ape Revisited*\n"
             "(13:00 - 14:00) - *The Keith Family ExperimentalHour*\n"
-            "(14:00 - 16:00) - *Keith F'em Bot DJ*\n"
-            "(16:00 - 18:00) - *Liv and Ken play Heavy Rock for Moms*\n"
+            "(15:00 - 16:00) - *Art Next Door*\n"
             "(18:00 - 20:00) - *Still Hating*\n"
-            "(20:00 - 21:00) - *wood, metal, stoned*\n"
-            "(21:00 - 22:00) - *Ängstkiste*\n"
-            "(22:00 - 00:00) - *Novo line*\n"
+            "(20:00 - 22:00) - *Ängstkiste*\n"
         )
         with patch.object(Command, "send", return_value=None) as mock_send:
             with patch("requests.get") as patched_get:

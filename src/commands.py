@@ -190,7 +190,7 @@ class Tomorrow(Command):
         on_day = calendar.day_name[tomorrow.weekday()].lower()
 
         # if tomorrow is monday, fetches 'nextmonday' on the array
-        if on_day == calendar.day_name[calendar.firstweekday()]:
+        if on_day.lower() == calendar.day_name[calendar.firstweekday()].lower():
             on_day = "next" + on_day
 
         response = self.http_client.get(
