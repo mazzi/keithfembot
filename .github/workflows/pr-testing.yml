@@ -116,7 +116,7 @@ jobs:
             ${{ github.workspace }}/requirements.txt
       - name: Run tests
         run: |
-          poetry run pytest -v --cov-report=lcov --cov=src
+          poetry run pytest -v --cov-report=lcov --cov=src && coveralls
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
