@@ -126,4 +126,4 @@ jobs:
 
       - name: Coveralls submit
         run: |
-          poetry run coveralls
+          poetry run coveralls --service=github
