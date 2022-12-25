@@ -125,7 +125,5 @@ jobs:
           path-to-lcov: ./coverage.lcov
 
       - name: Coveralls submit
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           poetry run coveralls
