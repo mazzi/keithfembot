@@ -120,4 +120,5 @@ jobs:
 
       - name: Coveralls submit
         run: |
+          coverage run --source=src/ -m pytest tests/
           poetry run coveralls --service=github
