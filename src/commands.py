@@ -1,5 +1,6 @@
 import calendar
 import datetime as dt
+import json
 
 from telegram import ParseMode
 
@@ -11,10 +12,18 @@ class Command:
     """A Base class for all the bot commands."""
 
     def __init__(self):
-        pass
+        self.service_url = None
+        self.headers = None
 
     def __call__(self, update, context) -> str:
         raise NotImplementedError
+
+    def _get(self) -> str:
+        """Gets info from external services"""
+        return self.http_client.get(
+            url=self.service_url,
+            headers=self.headers,
+        )
 
     def send(update, context, msg) -> None:
         """Send method from python-telegram-bot"""
@@ -90,8 +99,7 @@ class Joke(Command):
 
     def __call__(self, update, context) -> str:
 
-        msg = self.http_client.get(service_url=self.service_url, headers=self.headers)
-
+        msg = self._get()
         self.send(update, context, msg)
         return msg
 
@@ -116,9 +124,7 @@ class Now(Command):
 
     def __call__(self, update, context) -> str:
 
-        response = self.http_client.get(
-            url=self.service_url,
-        ).json()
+        response = self._get().json()
 
         helper = ParseHelper()
         show = helper.parse_show(response[self.node][0])
@@ -139,9 +145,7 @@ class Next(Command):
 
     def __call__(self, update, context) -> str:
 
-        response = self.http_client.get(
-            url=self.service_url,
-        ).json()
+        response = self._get().json()
 
         helper = ParseHelper()
         show = helper.parse_show(response[self.node][0])
@@ -163,9 +167,7 @@ class Today(Command):
         today = dt.date.today()
         on_day = calendar.day_name[today.weekday()].lower()
 
-        response = self.http_client.get(
-            url=self.service_url,
-        ).json()
+        response = self._get().json()
 
         helper = ParseHelper()
         shows = helper.parse_shows_for_day(response, on_day)
@@ -193,9 +195,7 @@ class Tomorrow(Command):
         if on_day.lower() == calendar.day_name[calendar.firstweekday()].lower():
             on_day = "next" + on_day
 
-        response = self.http_client.get(
-            url=self.service_url,
-        ).json()
+        response = self._get().json()
 
         helper = ParseHelper()
         shows = helper.parse_shows_for_day(response, on_day)
@@ -219,9 +219,7 @@ class Week(Command):
 
     def __call__(self, update, context) -> str:
 
-        response = self.http_client.get(
-            url=self.service_url,
-        ).json()
+        response = self._get().json()
 
         helper = ParseHelper()
 

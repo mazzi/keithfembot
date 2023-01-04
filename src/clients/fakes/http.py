@@ -8,10 +8,10 @@ class FakeHTTPClient:
     def __init__(self, http_client=None):
         self.http_client = http_client
 
-    def get(self, service_url, headers=None):
+    def get(self, url, headers=None):
         """HTTP GET"""
 
-        if service_url == config.DADJOKE_URL:
+        if url == config.DADJOKE_URL:
             if not headers.keys() & {"User-Agent", "Accept"}:
                 raise HTTPError("User-Agent and Accept is needed for this service.")
             return (
