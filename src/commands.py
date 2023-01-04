@@ -1,6 +1,5 @@
 import calendar
 import datetime as dt
-import json
 
 from telegram import ParseMode
 
