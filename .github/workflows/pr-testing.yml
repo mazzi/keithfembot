@@ -116,13 +116,12 @@ jobs:
             ${{ github.workspace }}/requirements.txt
       - name: Run tests
         run: |
-          poetry run pytest -v --cov-report=json --cov=src
+          poetry run pytest -v
 
       - name: Coveralls
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./coverage.json
 
       - name: Coveralls submit
         run: |
