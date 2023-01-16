@@ -3,8 +3,18 @@ import logging
 from telegram.ext import CommandHandler, Updater
 
 from clients.http import HTTPClient
-from commands import (About, Command, Donate, Help, Joke, Next, Now, Today,
-                      Tomorrow, Week)
+from commands import (
+    About,
+    Command,
+    Donate,
+    Help,
+    Joke,
+    Next,
+    Now,
+    Today,
+    Tomorrow,
+    Week,
+)
 from config import HTTP_API_TOKEN
 from exceptions import HTTPError, KeithFemException
 
