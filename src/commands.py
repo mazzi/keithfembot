@@ -13,9 +13,11 @@ class Command:
     def __init__(self):
         self.service_url = None
         self.headers = None
+        self.msg = None
 
     def __call__(self, update, context) -> str:
-        raise NotImplementedError
+        self.send(update, context, self.msg)
+        return self.msg
 
     def _get(self) -> str:
         """Gets info from external services"""
@@ -55,13 +57,14 @@ class Command:
         """
         return "*%s* (%s - %s _🇩🇪 time!_)" % (show[2:] + show[:2])
 
-    def send(update, context, msg) -> None:
+    def send(self, update, context, msg=None) -> None:
         """Send method from python-telegram-bot"""
         context.bot.send_message(
             chat_id=update.effective_chat.id,
-            text=msg,
+            text=msg or self.msg,
             parse_mode=ParseMode.MARKDOWN,
         )
+        return msg or self.msg
 
 
 class About(Command):
@@ -69,16 +72,12 @@ class About(Command):
 
     def __init__(self):
         super().__init__()
-
-    def __call__(self, update, context):
-        msg = (
+        self.msg = (
             "Keith F'em, a community radio experiment, is presented by Keith "
             "in conjunction with SP2. `hello@keithfem.com`\n"
             "Bot created in Barcelona during the COVID-19 outbreak quarantine "
             "(March 2020) ✌️"
         )
-        self.send(update, context, msg)
-        return msg
 
 
 class Donate(Command):
@@ -86,11 +85,7 @@ class Donate(Command):
 
     def __init__(self):
         super().__init__()
-
-    def __call__(self, update, context) -> str:
-        msg = "[https://www.paypal.me/keithfem]"
-        self.send(update, context, msg)
-        return msg
+        self.msg = "[https://www.paypal.me/keithfem]"
 
 
 class Help(Command):
@@ -98,9 +93,7 @@ class Help(Command):
 
     def __init__(self):
         super().__init__()
-
-    def __call__(self, update, context) -> str:
-        msg = (
+        self.msg = (
             "`/about`: the old and boring about command.\n"
             "`/now`: show what is on the air at the moment.\n"
             "`/next`: displays the upcoming show.\n"
@@ -111,8 +104,6 @@ class Help(Command):
             "`/donate`: donate to Keith F'em.\n"
             "`/help`: this help.\n"
         )
-        self.send(update, context, msg)
-        return msg
 
 
 class Joke(Command):
@@ -204,24 +195,24 @@ class DayCommand(Command):
             shows_msg += "(%s - %s) - *%s*\n" % super()._parse(show)
         return shows_msg
 
+    def _format(self, day) -> str:
+        return "Shows for %s _🇩🇪 time!_\n" % (day.replace("next", "")).capitalize()
+
+    def __call__(self, update, context) -> str:
+        response = self._get().json()
+        shows = self._parse(response, self.on_day)
+        msg = self._format(self.on_day) + shows
+        self.send(update, context, msg)
+        return msg
+
 
 class Today(DayCommand):
     """Displays the radio schedule for today"""
 
     def __init__(self, http_client, service_url=None):
         super().__init__(http_client, service_url)
-
-    def __call__(self, update, context) -> str:
         today = dt.date.today()
-        on_day = calendar.day_name[today.weekday()].lower()
-
-        response = self._get().json()
-        shows = self._parse(response, on_day)
-
-        msg = "Shows for %s _🇩🇪 time!_\n" % (on_day.capitalize(),) + shows
-
-        self.send(update, context, msg)
-        return msg
+        self.on_day = calendar.day_name[today.weekday()].lower()
 
 
 class Tomorrow(DayCommand):
@@ -229,25 +220,11 @@ class Tomorrow(DayCommand):
 
     def __init__(self, http_client, service_url=None):
         super().__init__(http_client, service_url)
-
-    def __call__(self, update, context) -> str:
         tomorrow = dt.date.today() + dt.timedelta(days=1)
-        on_day = calendar.day_name[tomorrow.weekday()].lower()
-
+        self.on_day = calendar.day_name[tomorrow.weekday()].lower()
         # if tomorrow is monday, fetches 'nextmonday' on the array
-        if on_day.lower() == calendar.day_name[calendar.firstweekday()].lower():
-            on_day = "next" + on_day
-
-        response = self._get().json()
-        shows = self._parse(response, on_day)
-
-        msg = (
-            "Shows for %s _🇩🇪 time!_\n" % (on_day.replace("next", "").capitalize(),)
-            + shows
-        )
-
-        self.send(update, context, msg)
-        return msg
+        if self.on_day.lower() == calendar.day_name[calendar.firstweekday()].lower():
+            self.on_day = "next" + self.on_day
 
 
 class Week(Command):
