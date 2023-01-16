@@ -24,7 +24,7 @@ class Command:
             headers=self.headers,
         )
 
-    def _parse_show(self, show) -> str:
+    def _parse(self, show) -> str:
         """Parses show name, start and end.
 
         Args:
@@ -43,7 +43,7 @@ class Command:
             html.unescape(name),
         )
 
-    def _format_show(self, show) -> str:
+    def _format(self, show) -> str:
         """Formats a show info to be ready to be send
 
         Args:
@@ -153,7 +153,7 @@ class ShowCommand(Command):
 
     def __call__(self, update, context) -> str:
         response = self._get().json()
-        msg = self._format_show(self._parse_show(response[self.node][0]))
+        msg = self._format(self._parse(response[self.node][0]))
 
         self.send(update, context, msg)
         return msg
@@ -201,7 +201,7 @@ class DayCommand(Command):
         """
         shows_msg = ""
         for show in response[day.lower()]:
-            shows_msg += "(%s - %s) - *%s*\n" % self._parse_show(show)
+            shows_msg += "(%s - %s) - *%s*\n" % super()._parse(show)
         return shows_msg
 
 
@@ -277,7 +277,7 @@ class Week(Command):
                 continue
             msg += "*Shows for %s*\n" % (day.capitalize(),)
             for show in response[day]:
-                msg += "(%s - %s) - *%s*\n" % self._parse_show(show)
+                msg += "(%s - %s) - *%s*\n" % super()._parse(show)
         msg += "_ All shows are in 🇩🇪 time!_"
 
         return msg
