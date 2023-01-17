@@ -117,8 +117,24 @@ class TestCommandsWithDependencies:
         assert msg == expected_show
 
     @freeze_time("2020-12-29")  # Tuesday
-    def test_next_is_empty(self, response_live_info_with_empty_shows):
+    def test_next_is_tomorrow(self, response_live_info_with_empty_shows):
         expected_show = "*Actual Figures* (15:00 - 17:00 _🇩🇪 time!_)"
+        with patch.object(Command, "send", return_value=None) as mock_send:
+            with patch("requests.get") as patched_get:
+                patched_get.return_value = response_live_info_with_empty_shows
+                msg = Next(http_client=requests)(update=None, context=None)
+
+                patched_get.assert_called_once()
+                mock_send.assert_called_once_with(None, None, msg)
+
+        assert msg == expected_show
+
+    @freeze_time("2020-12-28")  # Monday
+    def test_next_is_empty(self, response_live_info_with_empty_shows):
+        expected_show = (
+            "Nothing else scheduled for today 🥺.\n"
+            "Check the weekly schedule with /week command."
+        )
         with patch.object(Command, "send", return_value=None) as mock_send:
             with patch("requests.get") as patched_get:
                 patched_get.return_value = response_live_info_with_empty_shows
