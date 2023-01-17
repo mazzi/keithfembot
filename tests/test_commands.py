@@ -72,6 +72,7 @@ class TestCommandsWithDependencies:
 
         assert "User-Agent and Accept is needed for this service." in str(e.value)
 
+    @freeze_time("2020-12-27")  # Sunday
     def test_now(self, response_live_info):
         expected_show = "*Keith F'em Bot DJ* (20:00 - 22:00 _🇩🇪 time!_)"
         with patch.object(Command, "send", return_value=None) as mock_send:
@@ -84,6 +85,23 @@ class TestCommandsWithDependencies:
 
         assert msg == expected_show
 
+    @freeze_time("2020-12-29")  # Tuesday
+    def test_now_is_empty(self, response_live_info_with_empty_shows):
+        expected_show = (
+            "Nothing being broadcasted at the moment 🥺.\n"
+            "Check the weekly schedule with /week command."
+        )
+        with patch.object(Command, "send", return_value=None) as mock_send:
+            with patch("requests.get") as patched_get:
+                patched_get.return_value = response_live_info_with_empty_shows
+                msg = Now(http_client=requests)(update=None, context=None)
+
+                patched_get.assert_called_once()
+                mock_send.assert_called_once_with(None, None, msg)
+
+        assert msg == expected_show
+
+    @freeze_time("2020-12-27")  # Sunday
     def test_next(self, response_live_info):
         expected_show = (
             "*Franky Teardrop's Post-Victorian Classical* (22:00 - 00:00 _🇩🇪 time!_)"
@@ -91,6 +109,19 @@ class TestCommandsWithDependencies:
         with patch.object(Command, "send", return_value=None) as mock_send:
             with patch("requests.get") as patched_get:
                 patched_get.return_value = response_live_info
+                msg = Next(http_client=requests)(update=None, context=None)
+
+                patched_get.assert_called_once()
+                mock_send.assert_called_once_with(None, None, msg)
+
+        assert msg == expected_show
+
+    @freeze_time("2020-12-29")  # Tuesday
+    def test_next_is_empty(self, response_live_info_with_empty_shows):
+        expected_show = "*Actual Figures* (15:00 - 17:00 _🇩🇪 time!_)"
+        with patch.object(Command, "send", return_value=None) as mock_send:
+            with patch("requests.get") as patched_get:
+                patched_get.return_value = response_live_info_with_empty_shows
                 msg = Next(http_client=requests)(update=None, context=None)
 
                 patched_get.assert_called_once()
@@ -124,6 +155,22 @@ class TestCommandsWithDependencies:
         assert msg == expected
 
     @freeze_time("2020-12-29")  # Tuesday
+    def test_today_is_empty(self, response_week_info_with_empty_days):
+        expected = (
+            "No shows are scheduled for today 🤷.\n"
+            "Check the weekly schedule with /week command."
+        )
+        with patch.object(Command, "send", return_value=None) as mock_send:
+            with patch("requests.get") as patched_get:
+                patched_get.return_value = response_week_info_with_empty_days
+                msg = Today(http_client=requests)(update=None, context=None)
+
+                patched_get.assert_called_once()
+                mock_send.assert_called_once_with(None, None, msg)
+
+        assert msg == expected
+
+    @freeze_time("2020-12-29")  # Tuesday
     def test_tomorrow(self, response_week_info):
         expected = (
             "Shows for Wednesday _🇩🇪 time!_\n"
@@ -141,6 +188,22 @@ class TestCommandsWithDependencies:
         with patch.object(Command, "send", return_value=None) as mock_send:
             with patch("requests.get") as patched_get:
                 patched_get.return_value = response_week_info
+                msg = Tomorrow(http_client=requests)(update=None, context=None)
+
+                patched_get.assert_called_once()
+                mock_send.assert_called_once_with(None, None, msg)
+
+        assert msg == expected
+
+    @freeze_time("2020-12-28")  # Monday
+    def test_tomorrow_is_empty(self, response_week_info_with_empty_days):
+        expected = (
+            "No shows are scheduled for tomorrow 🤷.\n"
+            "Check the weekly schedule with /week command."
+        )
+        with patch.object(Command, "send", return_value=None) as mock_send:
+            with patch("requests.get") as patched_get:
+                patched_get.return_value = response_week_info_with_empty_days
                 msg = Tomorrow(http_client=requests)(update=None, context=None)
 
                 patched_get.assert_called_once()
@@ -247,6 +310,38 @@ class TestCommandsWithDependencies:
         with patch.object(Command, "send", return_value=None) as mock_send:
             with patch("requests.get") as patched_get:
                 patched_get.return_value = response_week_info
+                msg = Week(http_client=requests)(update=None, context=None)
+
+                patched_get.assert_called_once()
+                mock_send.assert_called_once_with(None, None, msg)
+
+        assert msg == expected
+
+    @freeze_time("2020-12-29")  # Wednesday
+    def test_week_with_empty_days(self, response_week_info_with_empty_days):
+        expected = (
+            "*Shows for Wednesday*\n"
+            "(15:00 - 17:00) - *Actual Figures*\n"
+            "(18:00 - 20:00) - *Kraut Kontrol*\n"
+            "(20:00 - 23:00) - *The Broth*\n"
+            "(23:00 - 23:25) - *Hearse Case Scenario - Die Bestatterinnen*\n"
+            "*Shows for Thursday*\n"
+            "(18:00 - 19:00) - *Arbitrarily Deterministic*\n"
+            "(22:00 - 00:00) - *Kujiradio*\n"
+            "*Shows for Friday*\n"
+            "(18:00 - 20:00) - *Sentient Hairstyles*\n"
+            "(20:00 - 21:15) - *Blauer Planet*\n"
+            "*Shows for Saturday*\n"
+            "(19:00 - 20:00) - *Angstkiste*\n"
+            "*Shows for Sunday*\n"
+            "(10:00 - 12:00) - *Steve’s Radio Show*\n"
+            "(12:00 - 12:50) - *Red Transmissions*\n"
+            "(16:00 - 18:00) - *Fuddle Duddle with DJ the Duncan & DinosaurOskar*\n"
+            "_ All shows are in 🇩🇪 time!_"
+        )
+        with patch.object(Command, "send", return_value=None) as mock_send:
+            with patch("requests.get") as patched_get:
+                patched_get.return_value = response_week_info_with_empty_days
                 msg = Week(http_client=requests)(update=None, context=None)
 
                 patched_get.assert_called_once()

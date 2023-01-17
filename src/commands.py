@@ -5,6 +5,7 @@ import html
 from telegram import ParseMode
 
 from config import DADJOKE_URL, KEITHFEM_BASE_URL
+from exceptions import NoShowException
 
 
 class Command:
@@ -35,7 +36,6 @@ class Command:
         Returns:
             tuple: A tuple with start time, end time and name of the show (un-scaped)
         """
-
         name = show["name"]
         starts = show["starts"][-8:-3]
         ends = show["ends"][-8:-3]
@@ -141,10 +141,29 @@ class ShowCommand(Command):
         self.http_client = http_client
         self.service_url = service_url or KEITHFEM_BASE_URL + "live-info"
         self.node = node
+        self.no_show_message = ""
+
+    def _parse(self, show) -> str:
+        # Only Parse if the show is today or tomorrow
+        today = dt.date.today().weekday()
+        tomorrow = (dt.date.today() + dt.timedelta(days=1)).weekday()
+        day_of_show = dt.datetime.strptime(
+            show["starts"], "%Y-%m-%d %H:%M:%S"
+        ).weekday()
+
+        if day_of_show not in [today, tomorrow]:
+            raise NoShowException
+
+        return super()._parse(show)
 
     def __call__(self, update, context) -> str:
         response = self._get().json()
-        msg = self._format(self._parse(response[self.node][0]))
+        try:
+            msg = self._format(self._parse(response[self.node][0]))
+        except (IndexError, NoShowException):
+            msg = (
+                self.no_show_message + "\nCheck the weekly schedule with /week command."
+            )
 
         self.send(update, context, msg)
         return msg
@@ -159,6 +178,7 @@ class Now(ShowCommand):
             http_client=http_client,
             service_url=service_url,
         )
+        self.no_show_message = "Nothing being broadcasted at the moment 🥺."
 
 
 class Next(ShowCommand):
@@ -170,6 +190,7 @@ class Next(ShowCommand):
             http_client=http_client,
             service_url=service_url,
         )
+        self.no_show_message = "Nothing else scheduled for today 🥺."
 
 
 class DayCommand(Command):
@@ -179,6 +200,7 @@ class DayCommand(Command):
         super().__init__()
         self.http_client = http_client
         self.service_url = service_url or KEITHFEM_BASE_URL + "week-info"
+        self.no_shows_message = ""
 
     def _parse(self, response, day) -> str:
         """From a response, it returns a string with the shows of the day
@@ -200,8 +222,16 @@ class DayCommand(Command):
 
     def __call__(self, update, context) -> str:
         response = self._get().json()
+
         shows = self._parse(response, self.on_day)
-        msg = self._format(self.on_day) + shows
+        if shows:
+            msg = self._format(self.on_day) + shows
+        else:
+            msg = (
+                self.no_shows_message
+                + "\nCheck the weekly schedule with /week command."
+            )
+
         self.send(update, context, msg)
         return msg
 
@@ -213,6 +243,7 @@ class Today(DayCommand):
         super().__init__(http_client, service_url)
         today = dt.date.today()
         self.on_day = calendar.day_name[today.weekday()].lower()
+        self.no_shows_message = "No shows are scheduled for today 🤷."
 
 
 class Tomorrow(DayCommand):
@@ -225,6 +256,7 @@ class Tomorrow(DayCommand):
         # if tomorrow is monday, fetches 'nextmonday' on the array
         if self.on_day.lower() == calendar.day_name[calendar.firstweekday()].lower():
             self.on_day = "next" + self.on_day
+        self.no_shows_message = "No shows are scheduled for tomorrow 🤷."
 
 
 class Week(Command):
@@ -234,6 +266,9 @@ class Week(Command):
         super().__init__()
         self.http_client = http_client
         self.service_url = service_url or KEITHFEM_BASE_URL + "week-info"
+        self.no_shows_message = (
+            "No shows for the week. This day should haven't arrived. 😭"
+        )
 
     def _parse(self, response) -> str:
         """From a response, it returns the shows for the week
@@ -252,10 +287,15 @@ class Week(Command):
         for day in response:
             if day not in days_of_the_week:
                 continue
-            msg += "*Shows for %s*\n" % (day.capitalize(),)
+            shows = ""
             for show in response[day]:
-                msg += "(%s - %s) - *%s*\n" % super()._parse(show)
-        msg += "_ All shows are in 🇩🇪 time!_"
+                shows += "(%s - %s) - *%s*\n" % super()._parse(show)
+            if shows:
+                msg += "*Shows for %s*\n" % (day.capitalize(),) + shows
+        if msg:
+            msg += "_ All shows are in 🇩🇪 time!_"
+        else:
+            msg = self.no_shows_message
 
         return msg
 
