@@ -131,8 +131,10 @@ class TestCommandsWithDependencies:
 
     @freeze_time("2020-12-28")  # Monday
     def test_next_is_empty(self, response_live_info_with_empty_shows):
-        expected_show = "Nothing else scheduled for today 🥺.\n" \
-                        "Check the weekly schedule with /week command."
+        expected_show = (
+            "Nothing else scheduled for today 🥺.\n"
+            "Check the weekly schedule with /week command."
+        )
         with patch.object(Command, "send", return_value=None) as mock_send:
             with patch("requests.get") as patched_get:
                 patched_get.return_value = response_live_info_with_empty_shows
