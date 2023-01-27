@@ -1,22 +1,10 @@
 import logging
 
-from telegram.ext import CommandHandler, Updater
+from telegram.ext import CallbackContext, CommandHandler, Updater
 
 from clients.http import HTTPClient
-from commands import (
-    About,
-    Command,
-    Donate,
-    Help,
-    Joke,
-    Next,
-    Now,
-    Today,
-    Tomorrow,
-    Week,
-)
+from commands import About, Donate, Help, Joke, Next, Now, Today, Tomorrow, Week
 from config import HTTP_API_TOKEN
-from exceptions import HTTPError, KeithFemException
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -24,41 +12,36 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def error_handler(update, context) -> None:
-    """Log Errors"""
-    logger.warning('Update "%s" caused error "%s"', update, context.error)
+def error_handler(update: object, context: CallbackContext) -> None:
+    """Log the error and send a telegram message to notify the developer."""
+    logger.error(msg="Exception while handling an update:", exc_info=context.error)
+
+    message = "Looks like the Bot cannot find what you need 😪"
+    context.bot.send_message(update, context, message)
 
 
 def main(http_client=None) -> None:
     """Starts the bot."""
     updater = Updater(token=HTTP_API_TOKEN, use_context=True)
 
-    dp = updater.dispatcher
+    dp = updater.dispatcher  # type: ignore
 
     http_client = http_client or HTTPClient()
 
-    try:
-        dp.add_handler(CommandHandler("about", About()))
-        dp.add_handler(CommandHandler("help", Help()))
-        dp.add_handler(CommandHandler("joke", Joke(http_client)))
-        dp.add_handler(CommandHandler("donate", Donate()))
-        dp.add_handler(CommandHandler("now", Now(http_client)))
-        dp.add_handler(CommandHandler("next", Next(http_client)))
-        dp.add_handler(CommandHandler("today", Today(http_client)))
-        dp.add_handler(CommandHandler("tomorrow", Tomorrow(http_client)))
-        dp.add_handler(CommandHandler("week", Week(http_client)))
+    dp.add_handler(CommandHandler("about", About()))  # type: ignore
+    dp.add_handler(CommandHandler("help", Help()))  # type: ignore
+    dp.add_handler(CommandHandler("joke", Joke(http_client)))  # type: ignore
+    dp.add_handler(CommandHandler("donate", Donate()))  # type: ignore
+    dp.add_handler(CommandHandler("now", Now(http_client)))  # type: ignore
+    dp.add_handler(CommandHandler("next", Next(http_client)))  # type: ignore
+    dp.add_handler(CommandHandler("today", Today(http_client)))  # type: ignore
+    dp.add_handler(CommandHandler("tomorrow", Tomorrow(http_client)))  # type: ignore
+    dp.add_handler(CommandHandler("week", Week(http_client)))  # type: ignore
 
-        dp.add_error_handler(error_handler)
+    dp.add_error_handler(error_handler)
 
-        updater.start_polling()
-        updater.idle()
-
-    except HTTPError:
-        Command.send("Looks like the Bot cannot find what you need 😪")
-
-    except KeithFemException:
-        Command.send("Nothing to say about that 🤐")
-        pass
+    updater.start_polling()
+    updater.idle()
 
 
 if __name__ == "__main__":

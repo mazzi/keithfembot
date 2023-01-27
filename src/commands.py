@@ -1,33 +1,39 @@
 import calendar
 import datetime as dt
 import html
+from typing import Tuple, Union
 
-from telegram import ParseMode
+import requests
+from telegram import ParseMode, Update
+from telegram.ext import CallbackContext
 
 from config import DADJOKE_URL, KEITHFEM_BASE_URL
-from exceptions import NoShowException
+from exceptions import KeithFemException, NoShowException
 
 
 class Command:
     """A Base class for all the bot commands."""
 
-    def __init__(self):
-        self.service_url = None
+    def __init__(self, http_client=None, service_url=None):
+        self.http_client = http_client
+        self.service_url = service_url
         self.headers = None
         self.msg = None
 
-    def __call__(self, update, context) -> str:
+    def __call__(
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
+    ) -> str:
         self.send(update, context, self.msg)
         return self.msg
 
-    def _get(self) -> str:
+    def _get(self) -> Union[str, requests.Response]:
         """Gets info from external services"""
         return self.http_client.get(
             url=self.service_url,
             headers=self.headers,
         )
 
-    def _parse(self, show) -> str:
+    def _parse(self, show) -> Tuple[str, str, str]:
         """Parses show name, start and end.
 
         Args:
@@ -57,10 +63,15 @@ class Command:
         """
         return "*%s* (%s - %s _🇩🇪 time!_)" % (show[2:] + show[:2])
 
-    def send(self, update, context, msg=None) -> None:
+    def send(
+        self,
+        update: Union[Update, None],
+        context: Union[CallbackContext, None],
+        msg=None,
+    ) -> None:
         """Send method from python-telegram-bot"""
-        context.bot.send_message(
-            chat_id=update.effective_chat.id,
+        context.bot.send_message(  # type: ignore
+            chat_id=update.effective_chat.id,  # type: ignore
             text=msg or self.msg,
             parse_mode=ParseMode.MARKDOWN,
         )
@@ -118,9 +129,11 @@ class Joke(Command):
             "Accept": "text/plain",
         }
 
-    def __call__(self, update, context) -> str:
+    def __call__(
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
+    ) -> str:
 
-        msg = self._get()
+        msg = str(self._get())
         self.send(update, context, msg)
         return msg
 
@@ -143,7 +156,7 @@ class ShowCommand(Command):
         self.node = node
         self.no_show_message = ""
 
-    def _parse(self, show) -> str:
+    def _parse(self, show) -> Tuple[str, str, str]:
         # Only Parse if the show is today or tomorrow
         today = dt.date.today().weekday()
         tomorrow = (dt.date.today() + dt.timedelta(days=1)).weekday()
@@ -156,10 +169,19 @@ class ShowCommand(Command):
 
         return super()._parse(show)
 
-    def __call__(self, update, context) -> str:
-        response = self._get().json()
+    def __call__(
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
+    ) -> str:
+        response = self._get()
+        if isinstance(response, requests.Response):
+            response = response.json()
+        else:
+            raise KeithFemException(
+                "Unexpected answer from service (%s)", self.__class__.__name__
+            )
+
         try:
-            msg = self._format(self._parse(response[self.node][0]))
+            msg = self._format(self._parse(response[self.node][0]))  # type: ignore
         except (IndexError, NoShowException):
             msg = (
                 self.no_show_message + "\nCheck the weekly schedule with /week command."
@@ -201,8 +223,9 @@ class DayCommand(Command):
         self.http_client = http_client
         self.service_url = service_url or KEITHFEM_BASE_URL + "week-info"
         self.no_shows_message = ""
+        self.on_day = None
 
-    def _parse(self, response, day) -> str:
+    def _parse_response(self, response, day) -> str:
         """From a response, it returns a string with the shows of the day
 
         Args:
@@ -220,10 +243,18 @@ class DayCommand(Command):
     def _format(self, day) -> str:
         return "Shows for %s _🇩🇪 time!_\n" % (day.replace("next", "")).capitalize()
 
-    def __call__(self, update, context) -> str:
-        response = self._get().json()
+    def __call__(
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
+    ) -> str:
+        response = self._get()
+        if isinstance(response, requests.Response):
+            response = response.json()
+        else:
+            raise KeithFemException(
+                "Unexpected answer from service (%s)", self.__class__.__name__
+            )
 
-        shows = self._parse(response, self.on_day)
+        shows = self._parse_response(response, self.on_day)
         if shows:
             msg = self._format(self.on_day) + shows
         else:
@@ -270,7 +301,7 @@ class Week(Command):
             "No shows for the week. This day should haven't arrived. 😭"
         )
 
-    def _parse(self, response) -> str:
+    def _parse_response(self, response) -> str:
         """From a response, it returns the shows for the week
 
         Args:
@@ -281,8 +312,8 @@ class Week(Command):
         """
         msg = ""
         days_of_the_week = []
-        for day in range(0, 7):
-            days_of_the_week.append(calendar.day_name[day].lower())
+        for day_number in range(0, 7):
+            days_of_the_week.append(calendar.day_name[day_number].lower())
 
         for day in response:
             if day not in days_of_the_week:
@@ -299,10 +330,19 @@ class Week(Command):
 
         return msg
 
-    def __call__(self, update, context) -> str:
+    def __call__(
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
+    ) -> str:
 
-        response = self._get().json()
-        msg = self._parse(response)
+        response = self._get()
+        if isinstance(response, requests.Response):
+            response = response.json()
+        else:
+            raise KeithFemException(
+                "Unexpected answer from service (%s)", self.__class__.__name__
+            )
+
+        msg = self._parse_response(response)
 
         self.send(update, context, msg)
         return msg
