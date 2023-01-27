@@ -1,21 +1,10 @@
 import logging
 
-from telegram.ext import CommandHandler, Updater, CallbackContext
+from telegram.ext import CallbackContext, CommandHandler, Updater
 
 from clients.http import HTTPClient
-from commands import (
-    About,
-    Donate,
-    Help,
-    Joke,
-    Next,
-    Now,
-    Today,
-    Tomorrow,
-    Week,
-)
+from commands import About, Donate, Help, Joke, Next, Now, Today, Tomorrow, Week
 from config import HTTP_API_TOKEN
-
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -28,7 +17,7 @@ def error_handler(update: object, context: CallbackContext) -> None:
     logger.error(msg="Exception while handling an update:", exc_info=context.error)
 
     message = "Looks like the Bot cannot find what you need 😪"
-    context.bot.send_message(update, context,  message)
+    context.bot.send_message(update, context, message)
 
 
 def main(http_client=None) -> None:

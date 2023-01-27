@@ -1,9 +1,9 @@
-import requests
 import calendar
 import datetime as dt
 import html
-from typing import Any, Tuple, Union
+from typing import Tuple, Union
 
+import requests
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext
 
@@ -21,9 +21,7 @@ class Command:
         self.msg = None
 
     def __call__(
-        self,
-        update: Union[Update, None],
-        context: Union[CallbackContext, None]
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
     ) -> str:
         self.send(update, context, self.msg)
         return self.msg
@@ -65,7 +63,12 @@ class Command:
         """
         return "*%s* (%s - %s _🇩🇪 time!_)" % (show[2:] + show[:2])
 
-    def send(self, update: Union[Update, None], context: Union[CallbackContext, None], msg=None) -> None:
+    def send(
+        self,
+        update: Union[Update, None],
+        context: Union[CallbackContext, None],
+        msg=None,
+    ) -> None:
         """Send method from python-telegram-bot"""
         context.bot.send_message(  # type: ignore
             chat_id=update.effective_chat.id,  # type: ignore
@@ -127,9 +130,7 @@ class Joke(Command):
         }
 
     def __call__(
-        self,
-        update: Union[Update, None],
-        context: Union[CallbackContext, None]
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
     ) -> str:
 
         msg = str(self._get())
@@ -169,9 +170,7 @@ class ShowCommand(Command):
         return super()._parse(show)
 
     def __call__(
-        self,
-        update: Union[Update, None],
-        context: Union[CallbackContext, None]
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
     ) -> str:
         response = self._get()
         if isinstance(response, requests.Response):
@@ -245,9 +244,7 @@ class DayCommand(Command):
         return "Shows for %s _🇩🇪 time!_\n" % (day.replace("next", "")).capitalize()
 
     def __call__(
-        self,
-        update: Union[Update, None],
-        context: Union[CallbackContext, None]
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
     ) -> str:
         response = self._get()
         if isinstance(response, requests.Response):
@@ -334,9 +331,7 @@ class Week(Command):
         return msg
 
     def __call__(
-        self,
-        update: Union[Update, None],
-        context: Union[CallbackContext, None]
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
     ) -> str:
 
         response = self._get()
