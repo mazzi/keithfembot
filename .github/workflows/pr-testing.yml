@@ -79,6 +79,10 @@ jobs:
         - name: Run Black
           run: |
             poetry run black --check src tests
+        - name: Run MyPy
+          run: |
+            poetry run mypy src tests
+
 
   tests:
     name: Tests
