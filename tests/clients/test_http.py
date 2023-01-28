@@ -17,7 +17,7 @@ class HTTPClientTest(TestCase):
 
         with patch("requests.get") as patched_get:
             http_client.get(url, headers)
-            patched_get.assert_called_once_with(url, headers)
+            patched_get.assert_called_once_with(url=url, headers=headers)
 
     def test_get_throws_exception(self):
         http_client = HTTPClient()
@@ -30,4 +30,4 @@ class HTTPClientTest(TestCase):
                 http_client.get(url, headers)
                 assert "Connection Error" in exc_info.value
 
-            patched_get.assert_called_once_with(url, headers)
+            patched_get.assert_called_once_with(url=url, headers=headers)

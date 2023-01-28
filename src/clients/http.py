@@ -12,7 +12,7 @@ class HTTPClient:
     def get(self, url, headers=None):
         """HTTP GET"""
         try:
-            response = self.http_client.get(url, headers)
+            response = self.http_client.get(url=url, headers=headers)
             response.raise_for_status()
         except Exception as exec:
             raise HTTPError(str(exec)) from exec

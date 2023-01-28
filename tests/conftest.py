@@ -1,8 +1,7 @@
-from unittest.mock import MagicMock
+import json
 from urllib import request
 
 import pytest
-from requests.models import Response
 
 from clients.http import HTTPClient
 
@@ -75,9 +74,7 @@ def show():
 @pytest.fixture
 def response_live_info():
     """Returns a response with full live info. Pretty long."""
-    response = MagicMock(spec=Response)
-    response.status_code = 200
-    response.json.return_value = {
+    response = {
         "env": "production",
         "schedulerTime": "2020-12-27 21:36:16",
         "previous": {
@@ -357,15 +354,13 @@ def response_live_info():
         "timezoneOffset": "3600",
         "AIRTIME_API_VERSION": "1.1",
     }
-    return response
+    return json.dumps(response)
 
 
 @pytest.fixture
 def response_live_info_with_empty_shows():
     """Returns a response with full live info. New schedule Wed-Sun."""
-    response = MagicMock(spec=Response)
-    response.status_code = 200
-    response.json.return_value = {
+    response = {
         "env": "production",
         "schedulerTime": "2023-01-16 22:01:50",
         "previous": {
@@ -549,15 +544,13 @@ def response_live_info_with_empty_shows():
         "timezoneOffset": "3600",
         "AIRTIME_API_VERSION": "1.1",
     }
-    return response
+    return json.dumps(response)
 
 
 @pytest.fixture
 def response_week_info():
     """Returns a week info response. Pretty long."""
-    response = MagicMock(spec=Response)
-    response.status_code = 200
-    response.json.return_value = {
+    response = {
         "monday": [
             {
                 "start_timestamp": "2020-12-28 00:00:00",
@@ -2547,15 +2540,13 @@ def response_week_info():
         ],
         "AIRTIME_API_VERSION": "1.1",
     }
-    return response
+    return json.dumps(response)
 
 
 @pytest.fixture
 def response_week_info_with_empty_days():
     """Returns a week info response. Pretty long."""
-    response = MagicMock(spec=Response)
-    response.status_code = 200
-    response.json.return_value = {
+    response = {
         "monday": [],
         "tuesday": [],
         "wednesday": [
@@ -2917,4 +2908,4 @@ def response_week_info_with_empty_days():
         ],
         "AIRTIME_API_VERSION": "1.1",
     }
-    return response
+    return json.dumps(response)

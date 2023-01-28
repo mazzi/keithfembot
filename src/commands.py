@@ -1,14 +1,14 @@
 import calendar
 import datetime as dt
 import html
+import json
 from typing import Tuple, Union
 
-import requests
 from telegram import ParseMode, Update
 from telegram.ext import CallbackContext
 
 from config import DADJOKE_URL, KEITHFEM_BASE_URL
-from exceptions import KeithFemException, NoShowException
+from exceptions import NoShowException
 
 
 class Command:
@@ -26,7 +26,7 @@ class Command:
         self.send(update, context, self.msg)
         return self.msg
 
-    def _get(self) -> Union[str, requests.models.Response]:
+    def _get(self) -> str:
         """Gets info from external services"""
         return self.http_client.get(
             url=self.service_url,
@@ -132,7 +132,6 @@ class Joke(Command):
     def __call__(
         self, update: Union[Update, None], context: Union[CallbackContext, None]
     ) -> str:
-
         msg = str(self._get())
         self.send(update, context, msg)
         return msg
@@ -172,13 +171,7 @@ class ShowCommand(Command):
     def __call__(
         self, update: Union[Update, None], context: Union[CallbackContext, None]
     ) -> str:
-        response = self._get()
-        if isinstance(response, requests.models.Response):
-            response = response.json()
-        else:
-            raise KeithFemException(
-                "Unexpected answer from service (%s)", self.__class__.__name__
-            )
+        response = json.loads(self._get())
 
         try:
             msg = self._format(self._parse(response[self.node][0]))  # type: ignore
@@ -246,14 +239,7 @@ class DayCommand(Command):
     def __call__(
         self, update: Union[Update, None], context: Union[CallbackContext, None]
     ) -> str:
-        response = self._get()
-        if isinstance(response, requests.models.Response):
-            response = response.json()
-        else:
-            raise KeithFemException(
-                "Unexpected answer from service (%s)", self.__class__.__name__
-            )
-
+        response = json.loads(self._get())
         shows = self._parse_response(response, self.on_day)
         if shows:
             msg = self._format(self.on_day) + shows
@@ -333,15 +319,7 @@ class Week(Command):
     def __call__(
         self, update: Union[Update, None], context: Union[CallbackContext, None]
     ) -> str:
-
-        response = self._get()
-        if isinstance(response, requests.models.Response):
-            response = response.json()
-        else:
-            raise KeithFemException(
-                "Unexpected answer from service (%s)", self.__class__.__name__
-            )
-
+        response = json.loads(self._get())
         msg = self._parse_response(response)
 
         self.send(update, context, msg)
