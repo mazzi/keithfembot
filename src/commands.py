@@ -26,7 +26,7 @@ class Command:
         self.send(update, context, self.msg)
         return self.msg
 
-    def _get(self) -> Union[str, requests.Response]:
+    def _get(self) -> Union[str, requests.models.Response]:
         """Gets info from external services"""
         return self.http_client.get(
             url=self.service_url,
@@ -173,7 +173,7 @@ class ShowCommand(Command):
         self, update: Union[Update, None], context: Union[CallbackContext, None]
     ) -> str:
         response = self._get()
-        if isinstance(response, requests.Response):
+        if isinstance(response, requests.models.Response):
             response = response.json()
         else:
             raise KeithFemException(
@@ -247,7 +247,7 @@ class DayCommand(Command):
         self, update: Union[Update, None], context: Union[CallbackContext, None]
     ) -> str:
         response = self._get()
-        if isinstance(response, requests.Response):
+        if isinstance(response, requests.models.Response):
             response = response.json()
         else:
             raise KeithFemException(
@@ -335,7 +335,7 @@ class Week(Command):
     ) -> str:
 
         response = self._get()
-        if isinstance(response, requests.Response):
+        if isinstance(response, requests.models.Response):
             response = response.json()
         else:
             raise KeithFemException(
