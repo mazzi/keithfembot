@@ -1,4 +1,4 @@
-FROM python:3.11-bullseye
+FROM python:3.11-slim-bullseye
 
 RUN groupadd -g 999 keithfembot && \
     useradd -u 999 -g 999 -m -d /keithfembot keithfembot
