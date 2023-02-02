@@ -33,7 +33,7 @@ HTTP_API_TOKEN is from [@Botfather](https://web.telegram.org/#/im?p=@BotFather)
 
 DADJOKE_URL is a jokes service.
 
-TIMEZONE is the TZ where the bot is running. Usually paired with airtime service TZ.
+TIMEZONE is the TZ where the bot is running. Usually paired with airtime service TZ. If not set 'Europe/Berlin' will be used.
 
 
 <sub><sup>Keith F'em, a community radio experiment, is presented by Keith in conjunction with SP2. hello@keithfem.com</sup></sub>
