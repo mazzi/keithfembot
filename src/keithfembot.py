@@ -1,10 +1,12 @@
 import logging
+import os
+import time
 
 from telegram.ext import CallbackContext, CommandHandler, Updater
 
 from clients.http import HTTPClient
 from commands import About, Donate, Help, Joke, Next, Now, Today, Tomorrow, Week
-from config import HTTP_API_TOKEN
+from config import HTTP_API_TOKEN, TIMEZONE
 
 logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s", level=logging.INFO
@@ -22,6 +24,10 @@ def error_handler(update: object, context: CallbackContext) -> None:
 
 def main(http_client=None) -> None:
     """Starts the bot."""
+
+    os.environ["TZ"] = TIMEZONE
+    time.tzset()  # Unix only function
+
     updater = Updater(token=HTTP_API_TOKEN, use_context=True)
 
     dp = updater.dispatcher  # type: ignore

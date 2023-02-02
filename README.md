@@ -24,6 +24,7 @@ export PYTHONPATH=./src/
 export KEITHFEM_BASE_URL=
 export HTTP_API_TOKEN=
 export DADJOKE_URL=https://icanhazdadjoke.com/
+export TIMEZONE='Europe/Berlin'
 ```
 
 KEITHFEM_BASE_URL is the [airtime](https://www.airtime.pro/) base url of the radio.
@@ -31,6 +32,8 @@ KEITHFEM_BASE_URL is the [airtime](https://www.airtime.pro/) base url of the rad
 HTTP_API_TOKEN is from [@Botfather](https://web.telegram.org/#/im?p=@BotFather)
 
 DADJOKE_URL is a jokes service.
+
+TIMEZONE is the TZ where the bot is running. Usually paired with airtime service TZ. If not set 'Europe/London' will be used.
 
 
 <sub><sup>Keith F'em, a community radio experiment, is presented by Keith in conjunction with SP2. hello@keithfem.com</sup></sub>
