@@ -1,3 +1,5 @@
+import calendar
+import datetime as dt
 from unittest.mock import patch
 
 import pytest
@@ -18,9 +20,6 @@ from commands import (
     Week,
 )
 from exceptions import HTTPError
-
-import datetime as dt
-import calendar
 
 
 class TestCommandsWithoutDependencies:
@@ -389,7 +388,7 @@ class TestCommandsWithDependencies:
             today_command = Today(http_client=requests)
 
             assert frozen_datetime() == tuesday_dt
-            assert calendar.day_name[tuesday_dt.weekday()].lower() == 'tuesday'
+            assert calendar.day_name[tuesday_dt.weekday()].lower() == "tuesday"
 
             with patch.object(Command, "send", return_value=None) as mock_send:
                 with patch("requests.get") as patched_get:
