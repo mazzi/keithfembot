@@ -1,3 +1,5 @@
+import calendar
+import datetime as dt
 from unittest.mock import patch
 
 import pytest
@@ -364,3 +366,50 @@ class TestCommandsWithDependencies:
                 mock_send.assert_called_once_with(None, None, msg)
 
         assert msg == expected
+
+    def test_fix_today_when_day_changes(self, response_week_info_with_empty_days):
+        expected_for_tuesday = (
+            "No shows are scheduled for today 🤷.\n"
+            "Check the weekly schedule with /week command."
+        )
+
+        expected_for_wednesday = (
+            "Shows for Wednesday _🇩🇪 time!_\n"
+            "(15:00 - 17:00) - *Actual Figures*\n"
+            "(18:00 - 20:00) - *Kraut Kontrol*\n"
+            "(20:00 - 23:00) - *The Broth*\n"
+            "(23:00 - 23:25) - *Hearse Case Scenario - Die Bestatterinnen*\n"
+        )
+
+        tuesday_dt = dt.datetime(year=2020, month=12, day=29)  # Tuesday
+        wednesday_dt = dt.datetime(year=2020, month=12, day=30)  # Wednesday
+
+        with freeze_time(tuesday_dt) as frozen_datetime:
+            today_command = Today(http_client=requests)
+
+            assert frozen_datetime() == tuesday_dt
+            assert calendar.day_name[tuesday_dt.weekday()].lower() == "tuesday"
+
+            with patch.object(Command, "send", return_value=None) as mock_send:
+                with patch("requests.get") as patched_get:
+                    patched_get.return_value = response_week_info_with_empty_days
+                    msg = today_command(update=None, context=None)
+
+                    patched_get.assert_called_once()
+                    mock_send.assert_called_once_with(None, None, msg)
+
+            assert msg == expected_for_tuesday
+
+            frozen_datetime.move_to(wednesday_dt)
+
+            assert frozen_datetime() == wednesday_dt
+
+            with patch.object(Command, "send", return_value=None) as mock_send:
+                with patch("requests.get") as patched_get:
+                    patched_get.return_value = response_week_info_with_empty_days
+                    msg = today_command(update=None, context=None)
+
+                    patched_get.assert_called_once()
+                    mock_send.assert_called_once_with(None, None, msg)
+
+            assert msg == expected_for_wednesday

@@ -258,9 +258,14 @@ class Today(DayCommand):
 
     def __init__(self, http_client, service_url=None):
         super().__init__(http_client, service_url)
+        self.no_shows_message = "No shows are scheduled for today 🤷."
+
+    def __call__(
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
+    ) -> str:
         today = dt.date.today()
         self.on_day = calendar.day_name[today.weekday()].lower()
-        self.no_shows_message = "No shows are scheduled for today 🤷."
+        return super().__call__(update, context)
 
 
 class Tomorrow(DayCommand):
@@ -268,12 +273,17 @@ class Tomorrow(DayCommand):
 
     def __init__(self, http_client, service_url=None):
         super().__init__(http_client, service_url)
+        self.no_shows_message = "No shows are scheduled for tomorrow 🤷."
+
+    def __call__(
+        self, update: Union[Update, None], context: Union[CallbackContext, None]
+    ) -> str:
         tomorrow = dt.date.today() + dt.timedelta(days=1)
         self.on_day = calendar.day_name[tomorrow.weekday()].lower()
         # if tomorrow is monday, fetches 'nextmonday' on the array
         if self.on_day.lower() == calendar.day_name[calendar.firstweekday()].lower():
             self.on_day = "next" + self.on_day
-        self.no_shows_message = "No shows are scheduled for tomorrow 🤷."
+        return super().__call__(update, context)
 
 
 class Week(Command):
