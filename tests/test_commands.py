@@ -26,7 +26,6 @@ class TestCommandsWithoutDependencies:
     """Methods without external dependencies"""
 
     def test_about(self, about) -> None:
-
         with patch.object(Command, "send", return_value=None) as mock_send:
             result = About()(update=None, context=None)
             mock_send.assert_called_once_with(None, None, about)
@@ -34,7 +33,6 @@ class TestCommandsWithoutDependencies:
         assert result == about
 
     def test_donate(self, donate) -> None:
-
         with patch.object(Command, "send", return_value=None) as mock_send:
             result = Donate()(update=None, context=None)
             mock_send.assert_called_once_with(None, None, donate)
@@ -42,7 +40,6 @@ class TestCommandsWithoutDependencies:
         assert result == donate
 
     def test_help(self, help):
-
         with patch.object(Command, "send", return_value=None) as mock_send:
             result = Help()(update=None, context=None)
             mock_send.assert_called_once_with(None, None, help)
@@ -54,7 +51,6 @@ class TestCommandsWithDependencies:
     """Methods with external dependencies"""
 
     def test_joke(self, joke):
-
         expected_joke = joke
 
         with patch.object(Command, "send", return_value=None) as mock_send:
@@ -64,7 +60,6 @@ class TestCommandsWithDependencies:
         assert result == expected_joke
 
     def test_joke_fails_without_header(self):
-
         with pytest.raises(HTTPError) as e:
             with patch.object(Command, "send", return_value=None) as mock_send:
                 Joke(FakeHTTPClient(), headers={"bad": "header"})(
