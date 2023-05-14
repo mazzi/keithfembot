@@ -10,7 +10,6 @@ from exceptions import HTTPError
 
 class HTTPClientTest(TestCase):
     def test_get(self):
-
         http_client = HTTPClient()
         url = "https://www.google.com"
         headers = {"Accept": "text/plain"}
