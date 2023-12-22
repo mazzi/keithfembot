@@ -12,7 +12,7 @@ python-telegram-bot = "^13.1"
 pytest-cov = "4.1.0"
 cryptography = "^41.0.6"
 pytest = "^7.4.3"
-mypy = "^1.7"
+mypy = "^1.8"
 types-requests = "^2.31.0"
 
 [tool.poetry.dev-dependencies]
