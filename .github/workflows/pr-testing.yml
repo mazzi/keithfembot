@@ -130,6 +130,11 @@ jobs:
           path: |
             ${{ github.workspace }}/.venv
             ${{ github.workspace }}/requirements.txt
+
+      - name: Install dependencies
+        run: |
+              poetry install --no-root
+
       - name: Run tests
         run: |
           poetry run pytest -v
