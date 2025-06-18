@@ -39,7 +39,8 @@ TIMEZONE is the TZ where the bot is running. Usually paired with airtime service
 ## Running tests
 
 ```bash
-poetry install
+poetry env use $(pyenv which python)
+poetry install --no-root
 poetry run pytest
 ```
 
