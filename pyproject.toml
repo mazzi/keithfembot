@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "A bot for www.keithfem.com telegram group chat that displays the schedule of the radio shows."
 authors = ["Lautaro Mazzitelli <lmazzitelli@gmail.com>"]
 license = "Attribution-NonCommercial-ShareAlike. CC BY-NC-SA"
+package-mode = false
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -15,7 +16,7 @@ pytest = "^7.4.3"
 mypy = "^1.7"
 types-requests = "^2.31.0"
 
-[tool.poetry.dev-dependencies]
+[tool.poetry.group.dev.dependencies]
 pytest = "^7.4.3"
 freezegun = "^1.2.1"
 coveralls = "^3.3.1"
