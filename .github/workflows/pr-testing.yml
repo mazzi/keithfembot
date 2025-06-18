@@ -75,6 +75,11 @@ jobs:
             path: |
               ${{ github.workspace }}/.venv
               ${{ github.workspace }}/requirements.txt
+
+        - name: Install dependencies
+          run: |
+              poetry install --no-root
+
         - name: Run Isort
           run: |
             poetry run isort --profile "black" --check src tests
