@@ -36,4 +36,11 @@ DADJOKE_URL is a jokes service.
 TIMEZONE is the TZ where the bot is running. Usually paired with airtime service TZ. If not set 'Europe/London' will be used.
 
 
+## Running tests
+
+```bash
+poetry install
+poetry run pytest
+```
+
 <sub><sup>Keith F'em, a community radio experiment, is presented by Keith in conjunction with SP2. hello@keithfem.com</sup></sub>
