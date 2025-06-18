@@ -41,8 +41,7 @@ jobs:
       - name: Install dependencies
         if: steps.valid-cache.outputs.cache-hit != 'true'
         run: |
-          python3 -m venv .venv
-          poetry install
+          poetry install --no-root
           poetry export --without-hashes -f requirements.txt > src/requirements.txt
 
   linters:
